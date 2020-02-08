@@ -59,6 +59,8 @@
 ; re-configure the JTAG and NMI pins as GPIO, which can lock the
 ; debugger out of the processor and make it permanently unable to be
 ; debugged or re-programmed.
+
+; ~~Port F~~
 GPIO_PORTF_DATA_R  EQU 0x400253FC
 GPIO_PORTF_DIR_R   EQU 0x40025400
 GPIO_PORTF_AFSEL_R EQU 0x40025420
@@ -68,6 +70,21 @@ GPIO_PORTF_LOCK_R  EQU 0x40025520
 GPIO_PORTF_CR_R    EQU 0x40025524
 GPIO_PORTF_AMSEL_R EQU 0x40025528
 GPIO_PORTF_PCTL_R  EQU 0x4002552C
+
+; ~~Pord D~~
+GPIO_PORTD_DATA_R  EQU 0x400073FC
+GPIO_PORTD_DIR_R   EQU 0x40007400
+GPIO_PORTD_AFSEL_R EQU 0x40007420
+GPIO_PORTD_PUR_R   EQU 0x40007510
+GPIO_PORTD_DEN_R   EQU 0x4000751C
+GPIO_PORTD_LOCK_R  EQU 0x40007520
+GPIO_PORTD_CR_R    EQU 0x40007524
+GPIO_PORTD_AMSEL_R EQU 0x40007528
+GPIO_PORTD_PCTL_R  EQU 0x4000752C
+
+
+
+	
 GPIO_LOCK_KEY      EQU 0x4C4F434B  ; Unlocks the GPIO_CR register
 RED       EQU 0x02
 BLUE      EQU 0x04
@@ -82,38 +99,45 @@ SYSCTL_RCGCGPIO_R  EQU   0x400FE608
         EXPORT  Start
 		
 Start
-    BL  PortF_Init                  ; initialize input and output pins of Port F
+;    BL  PortF_Init                  ; initialize input and output pins of Port F
+	BL PortD_Init
 loop
-    LDR R0, =FIFTHSEC               ; R0 = FIFTHSEC (delay 0.2 second)
-    BL  delay                       ; delay at least (3*R0) cycles
-    BL  PortF_Input                 ; read all of the switches on Port F
-    CMP R0, #0x01                   ; R0 == 0x01?
-    BEQ sw1pressed                  ; if so, switch 1 pressed
-    CMP R0, #0x10                   ; R0 == 0x10?
-    BEQ sw2pressed                  ; if so, switch 2 pressed
-    CMP R0, #0x00                   ; R0 == 0x00?
-    BEQ bothpressed                 ; if so, both switches pressed
-    CMP R0, #0x11                   ; R0 == 0x11?
-    BEQ nopressed                   ; if so, neither switch pressed
+	MOV R0, #0x01
+	BL PortD_Output
+	LDR R0, =50000
+	BL delay
+	MOV R0, #0x0
+	BL PortD_Output
+;    LDR R0, =FIFTHSEC               ; R0 = FIFTHSEC (delay 0.2 second)
+;    BL  delay                       ; delay at least (3*R0) cycles
+;    BL  PortF_Input                 ; read all of the switches on Port F
+;    CMP R0, #0x01                   ; R0 == 0x01?
+;    BEQ sw1pressed                  ; if so, switch 1 pressed
+;    CMP R0, #0x10                   ; R0 == 0x10?
+;    BEQ sw2pressed                  ; if so, switch 2 pressed
+;    CMP R0, #0x00                   ; R0 == 0x00?
+;    BEQ bothpressed                 ; if so, both switches pressed
+;    CMP R0, #0x11                   ; R0 == 0x11?
+;    BEQ nopressed                   ; if so, neither switch pressed
                                     ; if none of the above, unexpected return value
-    MOV R0, #(RED+GREEN+BLUE)       ; R0 = (RED|GREEN|BLUE) (all LEDs on)
-    BL  PortF_Output                ; turn all of the LEDs on
-    B   loop
-sw1pressed
-    MOV R0, #BLUE                   ; R0 = BLUE (blue LED on)
-    BL  PortF_Output                ; turn the blue LED on
-    B   loop
-sw2pressed
-    MOV R0, #RED                    ; R0 = RED (red LED on)
-    BL  PortF_Output                ; turn the red LED on
-    B   loop
-bothpressed
-    MOV R0, #GREEN                  ; R0 = GREEN (green LED on)
-    BL  PortF_Output                ; turn the green LED on
-    B   loop
-nopressed
-    MOV R0, #0                      ; R0 = 0 (no LEDs on)
-    BL  PortF_Output                ; turn all of the LEDs off
+;    MOV R0, #(RED+GREEN+BLUE)       ; R0 = (RED|GREEN|BLUE) (all LEDs on)
+;    BL  PortF_Output                ; turn all of the LEDs on
+;    B   loop
+;sw1pressed
+;    MOV R0, #BLUE                   ; R0 = BLUE (blue LED on)
+;    BL  PortF_Output                ; turn the blue LED on
+;    B   loop
+;sw2pressed
+;    MOV R0, #RED                    ; R0 = RED (red LED on)
+;    BL  PortF_Output                ; turn the red LED on
+;    B   loop
+;bothpressed
+;    MOV R0, #GREEN                  ; R0 = GREEN (green LED on)
+;    BL  PortF_Output                ; turn the green LED on
+;    B   loop
+;nopressed
+;    MOV R0, #0                      ; R0 = 0 (no LEDs on)
+;    BL  PortF_Output                ; turn all of the LEDs off
     B   loop
 
 ;------------delay------------
@@ -193,6 +217,59 @@ PortF_Output
     LDR R1, =GPIO_PORTF_DATA_R ; pointer to Port F data
     STR R0, [R1]               ; write to PF3-1
     BX  LR                    
+
+
+;------------PortD_Init------------
+; Initialize GPIO Port D for GPIA PD0. Weak internal pull-up
+; resistors are enabled.
+; Input: none
+; Output: none
+; Modifies: R0, R1, R2
+PortD_Init
+    LDR R1, =SYSCTL_RCGCGPIO_R      ; 1) activate clock for Port D
+    LDR R0, [R1]                 
+    ORR R0, R0, #0x08               ; set bit 5 to turn on clock
+    STR R0, [R1]                  
+    NOP
+    NOP                             ; allow time for clock to finish
+    LDR R1, =GPIO_PORTD_LOCK_R      ; 2) unlock the lock register
+    LDR R0, =0x4C4F434B             ; unlock GPIO Port D Commit Register
+    STR R0, [R1]                    
+    LDR R1, =GPIO_PORTD_CR_R        ; enable commit for Port D
+    MOV R0, #0xFF                   ; 1 means allow access
+    STR R0, [R1]                    
+    LDR R1, =GPIO_PORTD_AMSEL_R     ; 3) disable analog functionality
+    MOV R0, #0                      ; 0 means analog is off
+    STR R0, [R1]                    
+    LDR R1, =GPIO_PORTD_PCTL_R      ; 4) configure as GPIO
+    MOV R0, #0x00000000             ; 0 means configure Port D as GPIO
+    STR R0, [R1]                  
+    LDR R1, =GPIO_PORTD_DIR_R       ; 5) set direction register
+    MOV R0,#0x01                    ; PD0 
+    STR R0, [R1]                    
+    LDR R1, =GPIO_PORTD_AFSEL_R     ; 6) regular port function
+    MOV R0, #0                      ; 0 means disable alternate function 
+    STR R0, [R1]                    
+    LDR R1, =GPIO_PORTD_PUR_R       ; pull-up resistors for PD0
+    MOV R0, #0x01                   ; enable weak 
+    STR R0, [R1]              
+    LDR R1, =GPIO_PORTD_DEN_R       ; 7) enable Port D digital port
+    MOV R0, #0x01                   ; 1 means enable digital I/O
+    STR R0, [R1]                   
+    BX  LR      
+
+;------------PortD_Output------------
+; Set the output state of PD0-1.
+; Input: R0  new state of PD
+; Output: none
+; Modifies: R1
+PortD_Output
+    LDR R1, =GPIO_PORTD_DATA_R ; pointer to Port D data
+    STR R0, [R1]               ; write to PD0-1
+    BX  LR                    
+
+
+
 
     ALIGN                           ; make sure the end of this section is aligned
     END                             ; end of file
