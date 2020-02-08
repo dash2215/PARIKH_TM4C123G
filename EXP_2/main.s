@@ -59,8 +59,30 @@
 ; re-configure the JTAG and NMI pins as GPIO, which can lock the
 ; debugger out of the processor and make it permanently unable to be
 ; debugged or re-programmed.
+<<<<<<< Updated upstream
 
 ; ~~Port F~~
+=======
+;****************** main.s ***************
+; Modified by: Darshil Parikh
+; ECE505, W 2020, Experiment 1
+; This file adds on to the sample code provided. 
+; Date: 02/03/2020
+;*****************************************
+;	PORT D
+GPIO_PORTD_DATA_R 	EQU 0x400073FC
+GPIO_PORTD_DIR_R 	EQU 0x40007400
+GPIO_PORTD_AFSEL_R	EQU 0x40007420
+GPIO_PORTD_PUR_R	EQU 0x40007510
+GPIO_PORTD_DEN_R 	EQU 0x4000751C
+GPIO_PORTD_LOCK_R	EQU 0x40007520
+GPIO_PORTD_CR_R		EQU 0x40007524
+GPIO_PORTD_AMSEL_R	EQU 0x40007528
+GPIO_PORTD_PCTL_R	EQU 0x4000752C
+
+	
+;	PORT F
+>>>>>>> Stashed changes
 GPIO_PORTF_DATA_R  EQU 0x400253FC
 GPIO_PORTF_DIR_R   EQU 0x40025400
 GPIO_PORTF_AFSEL_R EQU 0x40025420
@@ -71,6 +93,7 @@ GPIO_PORTF_CR_R    EQU 0x40025524
 GPIO_PORTF_AMSEL_R EQU 0x40025528
 GPIO_PORTF_PCTL_R  EQU 0x4002552C
 
+<<<<<<< Updated upstream
 ; ~~Pord D~~
 GPIO_PORTD_DATA_R  EQU 0x400073FC
 GPIO_PORTD_DIR_R   EQU 0x40007400
@@ -85,6 +108,8 @@ GPIO_PORTD_PCTL_R  EQU 0x4000752C
 
 
 	
+=======
+>>>>>>> Stashed changes
 GPIO_LOCK_KEY      EQU 0x4C4F434B  ; Unlocks the GPIO_CR register
 RED       EQU 0x02
 BLUE      EQU 0x04
@@ -101,6 +126,7 @@ SYSCTL_RCGCGPIO_R  EQU   0x400FE608
 Start
 ;    BL  PortF_Init                  ; initialize input and output pins of Port F
 	BL PortD_Init
+<<<<<<< Updated upstream
 loop
 	MOV R0, #0x01
 	BL PortD_Output
@@ -108,6 +134,19 @@ loop
 	BL delay
 	MOV R0, #0x0
 	BL PortD_Output
+=======
+	
+loop
+	MOV R0, #0x01
+	BL PortD_Output
+	LDR R0, =FIFTHSEC
+	BL delay
+	MOV R0, #0x00
+	BL PortD_Output
+
+
+	
+>>>>>>> Stashed changes
 ;    LDR R0, =FIFTHSEC               ; R0 = FIFTHSEC (delay 0.2 second)
 ;    BL  delay                       ; delay at least (3*R0) cycles
 ;    BL  PortF_Input                 ; read all of the switches on Port F
@@ -189,7 +228,7 @@ PortF_Init
     MOV R0, #0x11                   ; enable weak pull-up on PF0 and PF4
     STR R0, [R1]              
     LDR R1, =GPIO_PORTF_DEN_R       ; 7) enable Port F digital port
-    MOV R0, #0xFF                   ; 1 means enable digital I/O
+    MOV R0, #0x00                   ; 1 means enable digital I/O
     STR R0, [R1]                   
     BX  LR      
 
@@ -219,21 +258,40 @@ PortF_Output
     BX  LR                    
 
 
+<<<<<<< Updated upstream
 ;------------PortD_Init------------
 ; Initialize GPIO Port D for GPIA PD0. Weak internal pull-up
 ; resistors are enabled.
 ; Input: none
 ; Output: none
+=======
+
+;------------PortD_Init------------
+; Initialize GPIO Port D for negative logic switches on PD0 and
+; PD4 as the Launchpad is wired.
+; Make the RGB LED's pins outputs.
+; Input: none
+; Output: PWM Signal
+>>>>>>> Stashed changes
 ; Modifies: R0, R1, R2
 PortD_Init
     LDR R1, =SYSCTL_RCGCGPIO_R      ; 1) activate clock for Port D
     LDR R0, [R1]                 
+<<<<<<< Updated upstream
     ORR R0, R0, #0x08               ; set bit 5 to turn on clock
     STR R0, [R1]                  
     NOP
     NOP                             ; allow time for clock to finish
     LDR R1, =GPIO_PORTD_LOCK_R      ; 2) unlock the lock register
     LDR R0, =0x4C4F434B             ; unlock GPIO Port D Commit Register
+=======
+    ORR R0, R0, #0x08               ; set bit 3 to turn on clock
+    STR R0, [R1]                  
+    NOP
+    NOP       
+    LDR R1, =GPIO_PORTD_LOCK_R      ; 2) unlock the lock register
+    LDR R0, =0x4C4F434B             ; unlock GPIO Port F Commit Register
+>>>>>>> Stashed changes
     STR R0, [R1]                    
     LDR R1, =GPIO_PORTD_CR_R        ; enable commit for Port D
     MOV R0, #0xFF                   ; 1 means allow access
@@ -242,14 +300,22 @@ PortD_Init
     MOV R0, #0                      ; 0 means analog is off
     STR R0, [R1]                    
     LDR R1, =GPIO_PORTD_PCTL_R      ; 4) configure as GPIO
+<<<<<<< Updated upstream
     MOV R0, #0x00000000             ; 0 means configure Port D as GPIO
     STR R0, [R1]                  
     LDR R1, =GPIO_PORTD_DIR_R       ; 5) set direction register
     MOV R0,#0x01                    ; PD0 
+=======
+    MOV R0, #0x00000000             ; 0 means configure Port F as GPIO
+    STR R0, [R1]                  
+    LDR R1, =GPIO_PORTD_DIR_R       ; 5) set direction register
+    MOV R0,#0x01                    ; PF0 and PF7-4 input, PF3-1 output
+>>>>>>> Stashed changes
     STR R0, [R1]                    
     LDR R1, =GPIO_PORTD_AFSEL_R     ; 6) regular port function
     MOV R0, #0                      ; 0 means disable alternate function 
     STR R0, [R1]                    
+<<<<<<< Updated upstream
     LDR R1, =GPIO_PORTD_PUR_R       ; pull-up resistors for PD0
     MOV R0, #0x01                   ; enable weak 
     STR R0, [R1]              
@@ -267,6 +333,26 @@ PortD_Output
     LDR R1, =GPIO_PORTD_DATA_R ; pointer to Port D data
     STR R0, [R1]               ; write to PD0-1
     BX  LR                    
+=======
+    LDR R1, =GPIO_PORTD_PUR_R       ; pull-up resistors for PF4,PF0
+    MOV R0, #0x01                   ; enable weak pull-up on PF0 and PF4
+    STR R0, [R1]              
+    LDR R1, =GPIO_PORTD_DEN_R       ; 7) enable Port F digital port
+    MOV R0, #0xFF                   ; 1 means enable digital I/O
+    STR R0, [R1]                   
+    BX  LR      
+
+
+;------------PortD_Output------------
+; Set the output state of PD0-1.
+; Input: R0  new state of PF
+; Output: none
+; Modifies: R1
+PortD_Output
+	LDR R1, =GPIO_PORTD_DATA_R ; pointer to Port D data
+    STR R0, [R1]               ; write to PF3-1
+	BX LR
+>>>>>>> Stashed changes
 
 
 
