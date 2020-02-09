@@ -60,6 +60,18 @@
 ; debugger out of the processor and make it permanently unable to be
 ; debugged or re-programmed.
 
+  
+;****************** main.s ***************
+; Modified by: Darshil Parikh
+; ECE505, W 2020, Experiment 2
+; This file intializes Port D Pin 0 as output. 
+; This file retains the LED functionality from the example by Valvano.
+; Left Button	-	440 Hz
+; Right Button	-	494 Hz
+; Both Button	-	523 Hz
+; Date: 02/07/2020
+;*****************************************
+
 ; ~~Port F~~
 GPIO_PORTF_DATA_R  EQU 0x400253FC
 GPIO_PORTF_DIR_R   EQU 0x40025400
@@ -99,47 +111,45 @@ SYSCTL_RCGCGPIO_R  EQU   0x400FE608
         EXPORT  Start
 		
 Start
-;    BL  PortF_Init                  ; initialize input and output pins of Port F
-	BL PortD_Init
+    BL  PortF_Init                  ; initialize input and output pins of Port F
+	BL  PortD_Init					; initialize Port D Pin 0 (PD0)
 loop
-	MOV R0, #12121
-	BL buzzer_pin_toggle_wPar
-;	MOV R0, #0x01
-;	BL buzzer_pin_toggle
-;	LDR R0, =ONESEC
-;	BL delay
-;	MOV R0, #0x0
-;	BL buzzer_pin_toggle
 ;    LDR R0, =FIFTHSEC               ; R0 = FIFTHSEC (delay 0.2 second)
 ;    BL  delay                       ; delay at least (3*R0) cycles
-;    BL  PortF_Input                 ; read all of the switches on Port F
-;    CMP R0, #0x01                   ; R0 == 0x01?
-;    BEQ sw1pressed                  ; if so, switch 1 pressed
-;    CMP R0, #0x10                   ; R0 == 0x10?
-;    BEQ sw2pressed                  ; if so, switch 2 pressed
-;    CMP R0, #0x00                   ; R0 == 0x00?
-;    BEQ bothpressed                 ; if so, both switches pressed
-;    CMP R0, #0x11                   ; R0 == 0x11?
-;    BEQ nopressed                   ; if so, neither switch pressed
+    BL  PortF_Input                 ; read all of the switches on Port F
+    CMP R0, #0x01                   ; R0 == 0x01?
+    BEQ sw1pressed                  ; if so, switch 1 pressed
+    CMP R0, #0x10                   ; R0 == 0x10?
+    BEQ sw2pressed                  ; if so, switch 2 pressed
+    CMP R0, #0x00                   ; R0 == 0x00?
+    BEQ bothpressed                 ; if so, both switches pressed
+    CMP R0, #0x11                   ; R0 == 0x11?
+    BEQ nopressed                   ; if so, neither switch pressed
                                     ; if none of the above, unexpected return value
-;    MOV R0, #(RED+GREEN+BLUE)       ; R0 = (RED|GREEN|BLUE) (all LEDs on)
-;    BL  PortF_Output                ; turn all of the LEDs on
-;    B   loop
-;sw1pressed
-;    MOV R0, #BLUE                   ; R0 = BLUE (blue LED on)
-;    BL  PortF_Output                ; turn the blue LED on
-;    B   loop
-;sw2pressed
-;    MOV R0, #RED                    ; R0 = RED (red LED on)
-;    BL  PortF_Output                ; turn the red LED on
-;    B   loop
-;bothpressed
-;    MOV R0, #GREEN                  ; R0 = GREEN (green LED on)
-;    BL  PortF_Output                ; turn the green LED on
-;    B   loop
-;nopressed
-;    MOV R0, #0                      ; R0 = 0 (no LEDs on)
-;    BL  PortF_Output                ; turn all of the LEDs off
+    MOV R0, #(RED+GREEN+BLUE)       ; R0 = (RED|GREEN|BLUE) (all LEDs on)
+    BL  PortF_Output                ; turn all of the LEDs on
+    B   loop
+sw1pressed
+    MOV R0, #BLUE                   ; R0 = BLUE (blue LED on)
+    BL  PortF_Output                ; turn the blue LED on
+	MOV R0, #12121					; 440 Hz for speaker
+	BL  buzzer_pin_toggle_wPar		; PD0 output function
+    B   loop
+sw2pressed
+    MOV R0, #RED                    ; R0 = RED (red LED on)
+    BL  PortF_Output                ; turn the red LED on
+	MOV R0, #10796					; 494 Hz for speaker
+	BL  buzzer_pin_toggle_wPar		; PD0 output function
+    B   loop
+bothpressed
+    MOV R0, #GREEN                  ; R0 = GREEN (green LED on)
+    BL  PortF_Output                ; turn the green LED on
+	MOV R0, #10197					; 523 Hz for speaker
+	BL  buzzer_pin_toggle_wPar		; PD0 output function
+    B   loop
+nopressed
+    MOV R0, #0                      ; R0 = 0 (no LEDs on)
+    BL  PortF_Output                ; turn all of the LEDs off
     B   loop
 
 ;------------delay------------
@@ -311,9 +321,6 @@ My_turnOFF_delay_loop
 	POP {LR}
 	BX LR						; Back to main
 	
-
-
-
 
     ALIGN                          ; make sure the end of this section is aligned
     END                            ; end of file
