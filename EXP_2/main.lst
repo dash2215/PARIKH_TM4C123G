@@ -208,121 +208,121 @@ ARM Macro Assembler    Page 4
   101 00000000         Start
   102 00000000         ;    BL  PortF_Init                  ; initialize input 
                        and output pins of Port F
-  103 00000000 F000 F83F       BL               PortD_Init
+  103 00000000 F000 F837       BL               PortD_Init
   104 00000004         loop
-  105 00000004 F04F 0001       MOV              R0, #0x01
-  106 00000008 F000 F862       BL               PortD_Output
-  107 0000000C F24C 3050       LDR              R0, =50000
-  108 00000010 F000 F805       BL               delay
-  109 00000014 F04F 0000       MOV              R0, #0x0
-  110 00000018 F000 F85A       BL               PortD_Output
-  111 0000001C         ;    LDR R0, =FIFTHSEC               ; R0 = FIFTHSEC (de
+  105 00000004 F642 7059       MOV              R0, #12121
+  106 00000008 F000 F86C       BL               buzzer_pin_toggle_wPar
+  107 0000000C         ; MOV R0, #0x01
+  108 0000000C         ; BL buzzer_pin_toggle
+  109 0000000C         ; LDR R0, =ONESEC
+  110 0000000C         ; BL delay
+  111 0000000C         ; MOV R0, #0x0
+  112 0000000C         ; BL buzzer_pin_toggle
+  113 0000000C         ;    LDR R0, =FIFTHSEC               ; R0 = FIFTHSEC (de
                        lay 0.2 second)
-  112 0000001C         ;    BL  delay                       ; delay at least (3
+  114 0000000C         ;    BL  delay                       ; delay at least (3
                        *R0) cycles
-  113 0000001C         ;    BL  PortF_Input                 ; read all of the s
+  115 0000000C         ;    BL  PortF_Input                 ; read all of the s
                        witches on Port F
-  114 0000001C         ;    CMP R0, #0x01                   ; R0 == 0x01?
-  115 0000001C         ;    BEQ sw1pressed                  ; if so, switch 1 p
+  116 0000000C         ;    CMP R0, #0x01                   ; R0 == 0x01?
+  117 0000000C         ;    BEQ sw1pressed                  ; if so, switch 1 p
                        ressed
-  116 0000001C         ;    CMP R0, #0x10                   ; R0 == 0x10?
-  117 0000001C         ;    BEQ sw2pressed                  ; if so, switch 2 p
+  118 0000000C         ;    CMP R0, #0x10                   ; R0 == 0x10?
+  119 0000000C         ;    BEQ sw2pressed                  ; if so, switch 2 p
                        ressed
-  118 0000001C         ;    CMP R0, #0x00                   ; R0 == 0x00?
-  119 0000001C         ;    BEQ bothpressed                 ; if so, both switc
+  120 0000000C         ;    CMP R0, #0x00                   ; R0 == 0x00?
+  121 0000000C         ;    BEQ bothpressed                 ; if so, both switc
                        hes pressed
-  120 0000001C         ;    CMP R0, #0x11                   ; R0 == 0x11?
-  121 0000001C         ;    BEQ nopressed                   ; if so, neither sw
+  122 0000000C         ;    CMP R0, #0x11                   ; R0 == 0x11?
+  123 0000000C         ;    BEQ nopressed                   ; if so, neither sw
                        itch pressed
-  122 0000001C         ; if none of the above, unexpected return value
-  123 0000001C         ;    MOV R0, #(RED+GREEN+BLUE)       ; R0 = (RED|GREEN|B
+  124 0000000C         ; if none of the above, unexpected return value
+  125 0000000C         ;    MOV R0, #(RED+GREEN+BLUE)       ; R0 = (RED|GREEN|B
                        LUE) (all LEDs on)
-  124 0000001C         ;    BL  PortF_Output                ; turn all of the L
+  126 0000000C         ;    BL  PortF_Output                ; turn all of the L
                        EDs on
-  125 0000001C         ;    B   loop
-  126 0000001C         ;sw1pressed
-  127 0000001C         ;    MOV R0, #BLUE                   ; R0 = BLUE (blue L
+  127 0000000C         ;    B   loop
+  128 0000000C         ;sw1pressed
+  129 0000000C         ;    MOV R0, #BLUE                   ; R0 = BLUE (blue L
                        ED on)
-  128 0000001C         ;    BL  PortF_Output                ; turn the blue LED
+  130 0000000C         ;    BL  PortF_Output                ; turn the blue LED
                         on
-  129 0000001C         ;    B   loop
-  130 0000001C         ;sw2pressed
-  131 0000001C         ;    MOV R0, #RED                    ; R0 = RED (red LED
+  131 0000000C         ;    B   loop
+  132 0000000C         ;sw2pressed
+  133 0000000C         ;    MOV R0, #RED                    ; R0 = RED (red LED
                         on)
-  132 0000001C         ;    BL  PortF_Output                ; turn the red LED 
+  134 0000000C         ;    BL  PortF_Output                ; turn the red LED 
                        on
-  133 0000001C         ;    B   loop
-  134 0000001C         ;bothpressed
-  135 0000001C         ;    MOV R0, #GREEN                  ; R0 = GREEN (green
+  135 0000000C         ;    B   loop
+  136 0000000C         ;bothpressed
+  137 0000000C         ;    MOV R0, #GREEN                  ; R0 = GREEN (green
                         LED on)
-  136 0000001C         ;    BL  PortF_Output                ; turn the green LE
-                       D on
-  137 0000001C         ;    B   loop
+  138 0000000C         ;    BL  PortF_Output                ; turn the green LE
 
 
 
 ARM Macro Assembler    Page 5 
 
 
-  138 0000001C         ;nopressed
-  139 0000001C         ;    MOV R0, #0                      ; R0 = 0 (no LEDs o
+                       D on
+  139 0000000C         ;    B   loop
+  140 0000000C         ;nopressed
+  141 0000000C         ;    MOV R0, #0                      ; R0 = 0 (no LEDs o
                        n)
-  140 0000001C         ;    BL  PortF_Output                ; turn all of the L
+  142 0000000C         ;    BL  PortF_Output                ; turn all of the L
                        EDs off
-  141 0000001C E7F2            B                loop
-  142 0000001E         
-  143 0000001E         ;------------delay------------
-  144 0000001E         ; Delay function for testing, which delays about 3*count
+  143 0000000C E7FA            B                loop
+  144 0000000E         
+  145 0000000E         ;------------delay------------
+  146 0000000E         ; Delay function for testing, which delays about 3*count
                         cycles.
-  145 0000001E         ; Input: R0  count
-  146 0000001E         ; Output: none
-  147 0000001E 00516155 
+  147 0000000E         ; Input: R0  count
+  148 0000000E         ; Output: none
+  149 0000000E 00516155 
                        ONESEC  EQU              5333333     ; approximately 1s 
                                                             delay at ~16 MHz cl
                                                             ock
-  148 0000001E 00145855 
+  150 0000000E 00145855 
                        QUARTERSEC
                                EQU              1333333     ; approximately 0.2
                                                             5s delay at ~16 MHz
                                                              clock
-  149 0000001E 001046AA 
+  151 0000000E 001046AA 
                        FIFTHSEC
                                EQU              1066666     ; approximately 0.2
                                                             s delay at ~16 MHz 
                                                             clock
-  150 0000001E         delay
-  151 0000001E 1E40            SUBS             R0, R0, #1  ; R0 = R0 - 1 (coun
+  152 0000000E         delay
+  153 0000000E 1E40            SUBS             R0, R0, #1  ; R0 = R0 - 1 (coun
                                                             t = count - 1)
-  152 00000020 D1FD            BNE              delay       ; if count (R0) != 
+  154 00000010 D1FD            BNE              delay       ; if count (R0) != 
                                                             0, skip to 'delay'
-  153 00000022 4770            BX               LR          ; return
-  154 00000024         
-  155 00000024         ;------------PortF_Init------------
-  156 00000024         ; Initialize GPIO Port F for negative logic switches on 
+  155 00000012 4770            BX               LR          ; return
+  156 00000014         
+  157 00000014         
+  158 00000014         ;------------PortF_Init------------
+  159 00000014         ; Initialize GPIO Port F for negative logic switches on 
                        PF0 and
-  157 00000024         ; PF4 as the Launchpad is wired.  Weak internal pull-up
-  158 00000024         ; resistors are enabled, and the NMI functionality on PF
+  160 00000014         ; PF4 as the Launchpad is wired.  Weak internal pull-up
+  161 00000014         ; resistors are enabled, and the NMI functionality on PF
                        0 is
-  159 00000024         ; disabled.  Make the RGB LED's pins outputs.
-  160 00000024         ; Input: none
-  161 00000024         ; Output: none
-  162 00000024         ; Modifies: R0, R1, R2
-  163 00000024         PortF_Init
-  164 00000024 492C            LDR              R1, =SYSCTL_RCGCGPIO_R ; 1) act
+  162 00000014         ; disabled.  Make the RGB LED's pins outputs.
+  163 00000014         ; Input: none
+  164 00000014         ; Output: none
+  165 00000014         ; Modifies: R0, R1, R2
+  166 00000014         PortF_Init
+  167 00000014 4940            LDR              R1, =SYSCTL_RCGCGPIO_R ; 1) act
                                                             ivate clock for Por
                                                             t F
-  165 00000026 6808            LDR              R0, [R1]
-  166 00000028 F040 0020       ORR              R0, R0, #0x20 ; set bit 5 to tu
+  168 00000016 6808            LDR              R0, [R1]
+  169 00000018 F040 0020       ORR              R0, R0, #0x20 ; set bit 5 to tu
                                                             rn on clock
-  167 0000002C 6008            STR              R0, [R1]
-  168 0000002E BF00            NOP
-  169 00000030 BF00            NOP                          ; allow time for cl
+  170 0000001C 6008            STR              R0, [R1]
+  171 0000001E BF00            NOP
+  172 00000020 BF00            NOP                          ; allow time for cl
                                                             ock to finish
-  170 00000032 492A            LDR              R1, =GPIO_PORTF_LOCK_R ; 2) unl
+  173 00000022 493E            LDR              R1, =GPIO_PORTF_LOCK_R ; 2) unl
                                                             ock the lock regist
-                                                            er
-  171 00000034 482A            LDR              R0, =0x4C4F434B ; unlock GPIO P
-                                                            ort F Commit Regist
 
 
 
@@ -330,174 +330,243 @@ ARM Macro Assembler    Page 6
 
 
                                                             er
-  172 00000036 6008            STR              R0, [R1]
-  173 00000038 492A            LDR              R1, =GPIO_PORTF_CR_R ; enable c
+  174 00000024 483E            LDR              R0, =0x4C4F434B ; unlock GPIO P
+                                                            ort F Commit Regist
+                                                            er
+  175 00000026 6008            STR              R0, [R1]
+  176 00000028 493E            LDR              R1, =GPIO_PORTF_CR_R ; enable c
                                                             ommit for Port F
-  174 0000003A F04F 00FF       MOV              R0, #0xFF   ; 1 means allow acc
+  177 0000002A F04F 00FF       MOV              R0, #0xFF   ; 1 means allow acc
                                                             ess
-  175 0000003E 6008            STR              R0, [R1]
-  176 00000040 4929            LDR              R1, =GPIO_PORTF_AMSEL_R ; 3) di
+  178 0000002E 6008            STR              R0, [R1]
+  179 00000030 493D            LDR              R1, =GPIO_PORTF_AMSEL_R ; 3) di
                                                             sable analog functi
                                                             onality
-  177 00000042 F04F 0000       MOV              R0, #0      ; 0 means analog is
+  180 00000032 F04F 0000       MOV              R0, #0      ; 0 means analog is
                                                              off
-  178 00000046 6008            STR              R0, [R1]
-  179 00000048 4928            LDR              R1, =GPIO_PORTF_PCTL_R ; 4) con
+  181 00000036 6008            STR              R0, [R1]
+  182 00000038 493C            LDR              R1, =GPIO_PORTF_PCTL_R ; 4) con
                                                             figure as GPIO
-  180 0000004A F04F 0000       MOV              R0, #0x00000000 ; 0 means confi
+  183 0000003A F04F 0000       MOV              R0, #0x00000000 ; 0 means confi
                                                             gure Port F as GPIO
                                                             
-  181 0000004E 6008            STR              R0, [R1]
-  182 00000050 4927            LDR              R1, =GPIO_PORTF_DIR_R ; 5) set 
+  184 0000003E 6008            STR              R0, [R1]
+  185 00000040 493B            LDR              R1, =GPIO_PORTF_DIR_R ; 5) set 
                                                             direction register
-  183 00000052 F04F 000E       MOV              R0,#0x0E    ; PF0 and PF7-4 inp
+  186 00000042 F04F 000E       MOV              R0,#0x0E    ; PF0 and PF7-4 inp
                                                             ut, PF3-1 output
-  184 00000056 6008            STR              R0, [R1]
-  185 00000058 4926            LDR              R1, =GPIO_PORTF_AFSEL_R ; 6) re
+  187 00000046 6008            STR              R0, [R1]
+  188 00000048 493A            LDR              R1, =GPIO_PORTF_AFSEL_R ; 6) re
                                                             gular port function
                                                             
-  186 0000005A F04F 0000       MOV              R0, #0      ; 0 means disable a
+  189 0000004A F04F 0000       MOV              R0, #0      ; 0 means disable a
                                                             lternate function 
-  187 0000005E 6008            STR              R0, [R1]
-  188 00000060 4925            LDR              R1, =GPIO_PORTF_PUR_R ; pull-up
+  190 0000004E 6008            STR              R0, [R1]
+  191 00000050 4939            LDR              R1, =GPIO_PORTF_PUR_R ; pull-up
                                                              resistors for PF4,
                                                             PF0
-  189 00000062 F04F 0011       MOV              R0, #0x11   ; enable weak pull-
+  192 00000052 F04F 0011       MOV              R0, #0x11   ; enable weak pull-
                                                             up on PF0 and PF4
-  190 00000066 6008            STR              R0, [R1]
-  191 00000068 4924            LDR              R1, =GPIO_PORTF_DEN_R ; 7) enab
+  193 00000056 6008            STR              R0, [R1]
+  194 00000058 4938            LDR              R1, =GPIO_PORTF_DEN_R ; 7) enab
                                                             le Port F digital p
                                                             ort
-  192 0000006A F04F 00FF       MOV              R0, #0xFF   ; 1 means enable di
+  195 0000005A F04F 00FF       MOV              R0, #0xFF   ; 1 means enable di
                                                             gital I/O
-  193 0000006E 6008            STR              R0, [R1]
-  194 00000070 4770            BX               LR
-  195 00000072         
-  196 00000072         
-  197 00000072         ;------------PortF_Input------------
-  198 00000072         ; Read and return the status of the switches.
-  199 00000072         ; Input: none
-  200 00000072         ; Output: R0  0x01 if only Switch 1 is pressed
-  201 00000072         ;         R0  0x10 if only Switch 2 is pressed
-  202 00000072         ;         R0  0x00 if both switches are pressed
-  203 00000072         ;         R0  0x11 if no switches are pressed
-  204 00000072         ; Modifies: R1
-  205 00000072         PortF_Input
-  206 00000072 4923            LDR              R1, =GPIO_PORTF_DATA_R ; pointe
+  196 0000005E 6008            STR              R0, [R1]
+  197 00000060 4770            BX               LR
+  198 00000062         
+  199 00000062         
+  200 00000062         ;------------PortF_Input------------
+  201 00000062         ; Read and return the status of the switches.
+  202 00000062         ; Input: none
+  203 00000062         ; Output: R0  0x01 if only Switch 1 is pressed
+  204 00000062         ;         R0  0x10 if only Switch 2 is pressed
+  205 00000062         ;         R0  0x00 if both switches are pressed
+  206 00000062         ;         R0  0x11 if no switches are pressed
+  207 00000062         ; Modifies: R1
+  208 00000062         PortF_Input
+  209 00000062 4937            LDR              R1, =GPIO_PORTF_DATA_R ; pointe
                                                             r to Port F data
-  207 00000074 6808            LDR              R0, [R1]    ; read all of Port 
-                                                            F
-  208 00000076 F000 0011       AND              R0,R0,#0x11 ; just the input pi
 
 
 
 ARM Macro Assembler    Page 7 
 
 
+  210 00000064 6808            LDR              R0, [R1]    ; read all of Port 
+                                                            F
+  211 00000066 F000 0011       AND              R0,R0,#0x11 ; just the input pi
                                                             ns PF0 and PF4
-  209 0000007A 4770            BX               LR          ; return R0 with in
+  212 0000006A 4770            BX               LR          ; return R0 with in
                                                             puts
-  210 0000007C         
-  211 0000007C         ;------------PortF_Output------------
-  212 0000007C         ; Set the output state of PF3-1.
-  213 0000007C         ; Input: R0  new state of PF
-  214 0000007C         ; Output: none
-  215 0000007C         ; Modifies: R1
-  216 0000007C         PortF_Output
-  217 0000007C 4920            LDR              R1, =GPIO_PORTF_DATA_R ; pointe
+  213 0000006C         
+  214 0000006C         ;------------PortF_Output------------
+  215 0000006C         ; Set the output state of PF3-1.
+  216 0000006C         ; Input: R0  new state of PF
+  217 0000006C         ; Output: none
+  218 0000006C         ; Modifies: R1
+  219 0000006C         PortF_Output
+  220 0000006C 4934            LDR              R1, =GPIO_PORTF_DATA_R ; pointe
                                                             r to Port F data
-  218 0000007E 6008            STR              R0, [R1]    ; write to PF3-1
-  219 00000080 4770            BX               LR
-  220 00000082         
-  221 00000082         
-  222 00000082         ;------------PortD_Init------------
-  223 00000082         ; Initialize GPIO Port D for GPIA PD0. Weak internal pul
+  221 0000006E 6008            STR              R0, [R1]    ; write to PF3-1
+  222 00000070 4770            BX               LR
+  223 00000072         
+  224 00000072         
+  225 00000072         ;------------PortD_Init------------
+  226 00000072         ; Initialize GPIO Port D for GPIO PD0. Weak internal pul
                        l-up
-  224 00000082         ; resistors are enabled.
-  225 00000082         ; Input: none
-  226 00000082         ; Output: none
-  227 00000082         ; Modifies: R0, R1, R2
-  228 00000082         PortD_Init
-  229 00000082 4915            LDR              R1, =SYSCTL_RCGCGPIO_R ; 1) act
+  227 00000072         ; resistors are enabled.
+  228 00000072         ; Input: none
+  229 00000072         ; Output: none
+  230 00000072         ; Modifies: R0, R1, R2
+  231 00000072         PortD_Init
+  232 00000072 4929            LDR              R1, =SYSCTL_RCGCGPIO_R ; 1) act
                                                             ivate clock for Por
                                                             t D
-  230 00000084 6808            LDR              R0, [R1]
-  231 00000086 F040 0008       ORR              R0, R0, #0x08 ; set bit 5 to tu
-                                                            rn on clock
-  232 0000008A 6008            STR              R0, [R1]
-  233 0000008C BF00            NOP
-  234 0000008E BF00            NOP                          ; allow time for cl
+  233 00000074 6808            LDR              R0, [R1]
+  234 00000076 F040 0008       ORR              R0, R0, #0x08 ; set bit 5 to tu
+                                                            rn on clock for Por
+                                                            t D
+  235 0000007A 6008            STR              R0, [R1]
+  236 0000007C BF00            NOP
+  237 0000007E BF00            NOP                          ; allow time for cl
                                                             ock to finish
-  235 00000090 491C            LDR              R1, =GPIO_PORTD_LOCK_R ; 2) unl
+  238 00000080 4930            LDR              R1, =GPIO_PORTD_LOCK_R ; 2) unl
                                                             ock the lock regist
                                                             er
-  236 00000092 4813            LDR              R0, =0x4C4F434B ; unlock GPIO P
+  239 00000082 4827            LDR              R0, =0x4C4F434B ; unlock GPIO P
                                                             ort D Commit Regist
                                                             er
-  237 00000094 6008            STR              R0, [R1]
-  238 00000096 491C            LDR              R1, =GPIO_PORTD_CR_R ; enable c
+  240 00000084 6008            STR              R0, [R1]
+  241 00000086 4930            LDR              R1, =GPIO_PORTD_CR_R ; enable c
                                                             ommit for Port D
-  239 00000098 F04F 00FF       MOV              R0, #0xFF   ; 1 means allow acc
+  242 00000088 F04F 00FF       MOV              R0, #0xFF   ; 1 means allow acc
                                                             ess
-  240 0000009C 6008            STR              R0, [R1]
-  241 0000009E 491B            LDR              R1, =GPIO_PORTD_AMSEL_R ; 3) di
+  243 0000008C 6008            STR              R0, [R1]
+  244 0000008E 492F            LDR              R1, =GPIO_PORTD_AMSEL_R ; 3) di
                                                             sable analog functi
                                                             onality
-  242 000000A0 F04F 0000       MOV              R0, #0      ; 0 means analog is
+  245 00000090 F04F 0000       MOV              R0, #0      ; 0 means analog is
                                                              off
-  243 000000A4 6008            STR              R0, [R1]
-  244 000000A6 491A            LDR              R1, =GPIO_PORTD_PCTL_R ; 4) con
+  246 00000094 6008            STR              R0, [R1]
+  247 00000096 492E            LDR              R1, =GPIO_PORTD_PCTL_R ; 4) con
                                                             figure as GPIO
-  245 000000A8 F04F 0000       MOV              R0, #0x00000000 ; 0 means confi
-                                                            gure Port D as GPIO
-                                                            
-  246 000000AC 6008            STR              R0, [R1]
-  247 000000AE 4919            LDR              R1, =GPIO_PORTD_DIR_R ; 5) set 
+  248 00000098 F04F 0000       MOV              R0, #0x00000000 ; 0 means confi
 
 
 
 ARM Macro Assembler    Page 8 
 
 
+                                                            gure Port D as GPIO
+                                                            
+  249 0000009C 6008            STR              R0, [R1]
+  250 0000009E 492D            LDR              R1, =GPIO_PORTD_DIR_R ; 5) set 
                                                             direction register
-  248 000000B0 F04F 0001       MOV              R0,#0x01    ; PD0 
-  249 000000B4 6008            STR              R0, [R1]
-  250 000000B6 4918            LDR              R1, =GPIO_PORTD_AFSEL_R ; 6) re
+  251 000000A0 F04F 0001       MOV              R0,#0x01    ; PD0 
+  252 000000A4 6008            STR              R0, [R1]
+  253 000000A6 492C            LDR              R1, =GPIO_PORTD_AFSEL_R ; 6) re
                                                             gular port function
                                                             
-  251 000000B8 F04F 0000       MOV              R0, #0      ; 0 means disable a
+  254 000000A8 F04F 0000       MOV              R0, #0      ; 0 means disable a
                                                             lternate function 
-  252 000000BC 6008            STR              R0, [R1]
-  253 000000BE 4917            LDR              R1, =GPIO_PORTD_PUR_R ; pull-up
+  255 000000AC 6008            STR              R0, [R1]
+  256 000000AE 492B            LDR              R1, =GPIO_PORTD_PUR_R ; pull-up
                                                              resistors for PD0
-  254 000000C0 F04F 0001       MOV              R0, #0x01   ; enable weak 
-  255 000000C4 6008            STR              R0, [R1]
-  256 000000C6 4916            LDR              R1, =GPIO_PORTD_DEN_R ; 7) enab
+  257 000000B0 F04F 0001       MOV              R0, #0x01   ; enable weak 
+  258 000000B4 6008            STR              R0, [R1]
+  259 000000B6 492A            LDR              R1, =GPIO_PORTD_DEN_R ; 7) enab
                                                             le Port D digital p
                                                             ort
-  257 000000C8 F04F 0001       MOV              R0, #0x01   ; 1 means enable di
+  260 000000B8 F04F 0001       MOV              R0, #0x01   ; 1 means enable di
                                                             gital I/O
-  258 000000CC 6008            STR              R0, [R1]
-  259 000000CE 4770            BX               LR
-  260 000000D0         
-  261 000000D0         ;------------PortD_Output------------
-  262 000000D0         ; Set the output state of PD0-1.
-  263 000000D0         ; Input: R0  new state of PD
-  264 000000D0         ; Output: none
-  265 000000D0         ; Modifies: R1
-  266 000000D0         PortD_Output
-  267 000000D0 4914            LDR              R1, =GPIO_PORTD_DATA_R ; pointe
+  261 000000BC 6008            STR              R0, [R1]
+  262 000000BE 4770            BX               LR
+  263 000000C0         
+  264 000000C0         ;------------buzzer_pin_toggle------------
+  265 000000C0         ; Toggles output state of PD0 to high or low @ 4HZ.
+  266 000000C0         ; Input: R0 new state of PD0, R3 frequency
+  267 000000C0         ; Output: none
+  268 000000C0         ; Modifies: R1
+  269 000000C0         buzzer_pin_toggle
+  270 000000C0 B500            PUSH             {LR}        ; Push to save the 
+                                                            current branch of t
+                                                            he link register 
+  271 000000C2 F04F 0001       MOV              R0, #0x01   ; Turn ON PD0
+  272 000000C6 4927            LDR              R1, =GPIO_PORTD_DATA_R ; pointe
                                                             r to Port D data
-  268 000000D2 6008            STR              R0, [R1]    ; write to PD0-1
-  269 000000D4 4770            BX               LR
-  270 000000D6         
-  271 000000D6         
-  272 000000D6         
-  273 000000D6         
-  274 000000D6 00 00           ALIGN                        ; make sure the end
+  273 000000C8 6008            STR              R0, [R1]    ; write to PD0
+  274 000000CA 4827            LDR              R0, =QUARTERSEC ; Toggle @ 4Hz
+  275 000000CC F7FF FF9F       BL               delay       ; Branch to delay
+  276 000000D0 F04F 0000       MOV              R0, #0x00   ; Turn OFF PD0
+  277 000000D4 4923            LDR              R1, =GPIO_PORTD_DATA_R ; pointe
+                                                            r to Port D data
+  278 000000D6 6008            STR              R0, [R1]    ; write to PD0
+  279 000000D8 4823            LDR              R0, =QUARTERSEC ; Toggle @ 4Hz
+  280 000000DA F7FF FF98       BL               delay       ; Branch to delay
+  281 000000DE F85D EB04       POP              {LR}        ; POP the brach add
+                                                            ress from memory
+  282 000000E2 4770            BX               LR
+  283 000000E4         
+  284 000000E4         
+  285 000000E4         ;------------buzzer_pin_toggle_wPar------------
+  286 000000E4         ; Toggles output state of PD0 as per user provided param
+                       ter 
+  287 000000E4         ; Input: R0 cycles
+  288 000000E4         ; Output: none
+  289 000000E4         ; Modifies: R1, R4, R5
+  290 000000E4         buzzer_pin_toggle_wPar
+  291 000000E4 B500            PUSH             {LR}        ; Save address of t
+
+
+
+ARM Macro Assembler    Page 9 
+
+
+                                                            he main loop
+  292 000000E6 4604            MOV              R4, R0      ; Move user paramnt
+                                                            er to R4 to for ON 
+                                                            delay calculations
+  293 000000E8 4605            MOV              R5, R0      ; Move user paramnt
+                                                            er to R5 to for OFF
+                                                             delay calculations
+                                                            
+  294 000000EA         My_turnON_delay_loop
+  295 000000EA F04F 0001       MOV              R0, #0x01   ; Turn ON PD0
+  296 000000EE 491D            LDR              R1, =GPIO_PORTD_DATA_R ; pointe
+                                                            r to Port D data
+  297 000000F0 6008            STR              R0, [R1]    ; write to PD0
+  298 000000F2 F7FF FF8C       BL               delay       ; delay
+  299 000000F6 3C01            SUBS             R4, #1      ; Counter decerment
+                                                            
+  300 000000F8 2C00            CMP              R4, #0      ; Counter comparisi
+                                                            on
+  301 000000FA D1F6            BNE              My_turnON_delay_loop
+  302 000000FC         My_turnOFF_delay_loop
+  303 000000FC F04F 0000       MOV              R0, #0x00   ; Turn OFF PD0
+  304 00000100 4918            LDR              R1, =GPIO_PORTD_DATA_R ; pointe
+                                                            r to Port D data
+  305 00000102 6008            STR              R0, [R1]    ; write to PD0 
+  306 00000104 F04F 0001       MOV              R0, #0x01   ; R0 back to 1 to d
+                                                            elay by 1 cycle
+  307 00000108 F7FF FF81       BL               delay       ; delay
+  308 0000010C 3D01            SUBS             R5, #1      ; Counter decerment
+                                                            
+  309 0000010E 2D00            CMP              R5, #0      ; Counter comparisi
+                                                            on
+  310 00000110 D1F4            BNE              My_turnOFF_delay_loop
+  311 00000112 F85D EB04       POP              {LR}
+  312 00000116 4770            BX               LR          ; Back to main
+  313 00000118         
+  314 00000118         
+  315 00000118         
+  316 00000118         
+  317 00000118         
+  318 00000118                 ALIGN                        ; make sure the end
                                                              of this section is
                                                              aligned
-  275 000000D8                 END                          ; end of file
+  319 00000118                 END                          ; end of file
               400FE608 
               40025520 
               4C4F434B 
@@ -514,16 +583,17 @@ ARM Macro Assembler    Page 8
               40007528 
               4000752C 
               40007400 
+
+
+
+ARM Macro Assembler    Page 10 
+
+
               40007420 
               40007510 
               4000751C 
               400073FC 
-
-
-
-ARM Macro Assembler    Page 9 
-
-
+              00145855 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=.\_out\main.d -o.\_out\main.o -I.\RTE\_InputOutput -IC:\Keil_v5
 \ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include -IC:\Keil_v5\ARM\PACK\Keil\LM4F_DF
@@ -544,69 +614,95 @@ Symbol: .text
    Uses
       None
 Comment: .text unused
-PortD_Init 00000082
+My_turnOFF_delay_loop 000000FC
+
+Symbol: My_turnOFF_delay_loop
+   Definitions
+      At line 302 in file main.s
+   Uses
+      At line 310 in file main.s
+Comment: My_turnOFF_delay_loop used once
+My_turnON_delay_loop 000000EA
+
+Symbol: My_turnON_delay_loop
+   Definitions
+      At line 294 in file main.s
+   Uses
+      At line 301 in file main.s
+Comment: My_turnON_delay_loop used once
+PortD_Init 00000072
 
 Symbol: PortD_Init
    Definitions
-      At line 228 in file main.s
+      At line 231 in file main.s
    Uses
       At line 103 in file main.s
 Comment: PortD_Init used once
-PortD_Output 000000D0
-
-Symbol: PortD_Output
-   Definitions
-      At line 266 in file main.s
-   Uses
-      At line 106 in file main.s
-      At line 110 in file main.s
-
-PortF_Init 00000024
+PortF_Init 00000014
 
 Symbol: PortF_Init
    Definitions
-      At line 163 in file main.s
+      At line 166 in file main.s
    Uses
       None
 Comment: PortF_Init unused
-PortF_Input 00000072
+PortF_Input 00000062
 
 Symbol: PortF_Input
    Definitions
-      At line 205 in file main.s
+      At line 208 in file main.s
    Uses
       None
 Comment: PortF_Input unused
-PortF_Output 0000007C
+PortF_Output 0000006C
 
 Symbol: PortF_Output
    Definitions
-      At line 216 in file main.s
+      At line 219 in file main.s
    Uses
       None
 Comment: PortF_Output unused
 Start 00000000
 
 Symbol: Start
-   Definitions
-      At line 101 in file main.s
-   Uses
-      At line 99 in file main.s
-Comment: Start used once
-delay 0000001E
-
 
 
 
 ARM Macro Assembler    Page 2 Alphabetic symbol ordering
 Relocatable symbols
 
+   Definitions
+      At line 101 in file main.s
+   Uses
+      At line 99 in file main.s
+Comment: Start used once
+buzzer_pin_toggle 000000C0
+
+Symbol: buzzer_pin_toggle
+   Definitions
+      At line 269 in file main.s
+   Uses
+      None
+Comment: buzzer_pin_toggle unused
+buzzer_pin_toggle_wPar 000000E4
+
+Symbol: buzzer_pin_toggle_wPar
+   Definitions
+      At line 290 in file main.s
+   Uses
+      At line 106 in file main.s
+Comment: buzzer_pin_toggle_wPar used once
+delay 0000000E
+
 Symbol: delay
    Definitions
-      At line 150 in file main.s
-   Uses
-      At line 108 in file main.s
       At line 152 in file main.s
+   Uses
+      At line 154 in file main.s
+      At line 275 in file main.s
+      At line 280 in file main.s
+      At line 298 in file main.s
+      At line 307 in file main.s
 
 loop 00000004
 
@@ -614,9 +710,9 @@ Symbol: loop
    Definitions
       At line 104 in file main.s
    Uses
-      At line 141 in file main.s
+      At line 143 in file main.s
 Comment: loop used once
-9 symbols
+12 symbols
 
 
 
@@ -635,7 +731,7 @@ FIFTHSEC 001046AA
 
 Symbol: FIFTHSEC
    Definitions
-      At line 149 in file main.s
+      At line 151 in file main.s
    Uses
       None
 Comment: FIFTHSEC unused
@@ -653,7 +749,7 @@ Symbol: GPIO_PORTD_AFSEL_R
    Definitions
       At line 77 in file main.s
    Uses
-      At line 250 in file main.s
+      At line 253 in file main.s
 Comment: GPIO_PORTD_AFSEL_R used once
 GPIO_PORTD_AMSEL_R 40007528
 
@@ -661,7 +757,7 @@ Symbol: GPIO_PORTD_AMSEL_R
    Definitions
       At line 82 in file main.s
    Uses
-      At line 241 in file main.s
+      At line 244 in file main.s
 Comment: GPIO_PORTD_AMSEL_R used once
 GPIO_PORTD_CR_R 40007524
 
@@ -669,7 +765,7 @@ Symbol: GPIO_PORTD_CR_R
    Definitions
       At line 81 in file main.s
    Uses
-      At line 238 in file main.s
+      At line 241 in file main.s
 Comment: GPIO_PORTD_CR_R used once
 GPIO_PORTD_DATA_R 400073FC
 
@@ -677,21 +773,24 @@ Symbol: GPIO_PORTD_DATA_R
    Definitions
       At line 75 in file main.s
    Uses
-      At line 267 in file main.s
-Comment: GPIO_PORTD_DATA_R used once
-GPIO_PORTD_DEN_R 4000751C
+      At line 272 in file main.s
+      At line 277 in file main.s
+      At line 296 in file main.s
+      At line 304 in file main.s
 
-Symbol: GPIO_PORTD_DEN_R
 
 
 
 ARM Macro Assembler    Page 2 Alphabetic symbol ordering
 Absolute symbols
 
+GPIO_PORTD_DEN_R 4000751C
+
+Symbol: GPIO_PORTD_DEN_R
    Definitions
       At line 79 in file main.s
    Uses
-      At line 256 in file main.s
+      At line 259 in file main.s
 Comment: GPIO_PORTD_DEN_R used once
 GPIO_PORTD_DIR_R 40007400
 
@@ -699,7 +798,7 @@ Symbol: GPIO_PORTD_DIR_R
    Definitions
       At line 76 in file main.s
    Uses
-      At line 247 in file main.s
+      At line 250 in file main.s
 Comment: GPIO_PORTD_DIR_R used once
 GPIO_PORTD_LOCK_R 40007520
 
@@ -707,7 +806,7 @@ Symbol: GPIO_PORTD_LOCK_R
    Definitions
       At line 80 in file main.s
    Uses
-      At line 235 in file main.s
+      At line 238 in file main.s
 Comment: GPIO_PORTD_LOCK_R used once
 GPIO_PORTD_PCTL_R 4000752C
 
@@ -715,7 +814,7 @@ Symbol: GPIO_PORTD_PCTL_R
    Definitions
       At line 83 in file main.s
    Uses
-      At line 244 in file main.s
+      At line 247 in file main.s
 Comment: GPIO_PORTD_PCTL_R used once
 GPIO_PORTD_PUR_R 40007510
 
@@ -723,7 +822,7 @@ Symbol: GPIO_PORTD_PUR_R
    Definitions
       At line 78 in file main.s
    Uses
-      At line 253 in file main.s
+      At line 256 in file main.s
 Comment: GPIO_PORTD_PUR_R used once
 GPIO_PORTF_AFSEL_R 40025420
 
@@ -731,7 +830,7 @@ Symbol: GPIO_PORTF_AFSEL_R
    Definitions
       At line 66 in file main.s
    Uses
-      At line 185 in file main.s
+      At line 188 in file main.s
 Comment: GPIO_PORTF_AFSEL_R used once
 GPIO_PORTF_AMSEL_R 40025528
 
@@ -739,21 +838,21 @@ Symbol: GPIO_PORTF_AMSEL_R
    Definitions
       At line 71 in file main.s
    Uses
-      At line 176 in file main.s
+      At line 179 in file main.s
 Comment: GPIO_PORTF_AMSEL_R used once
 GPIO_PORTF_CR_R 40025524
 
 Symbol: GPIO_PORTF_CR_R
-   Definitions
-      At line 70 in file main.s
-   Uses
 
 
 
 ARM Macro Assembler    Page 3 Alphabetic symbol ordering
 Absolute symbols
 
-      At line 173 in file main.s
+   Definitions
+      At line 70 in file main.s
+   Uses
+      At line 176 in file main.s
 Comment: GPIO_PORTF_CR_R used once
 GPIO_PORTF_DATA_R 400253FC
 
@@ -761,8 +860,8 @@ Symbol: GPIO_PORTF_DATA_R
    Definitions
       At line 64 in file main.s
    Uses
-      At line 206 in file main.s
-      At line 217 in file main.s
+      At line 209 in file main.s
+      At line 220 in file main.s
 
 GPIO_PORTF_DEN_R 4002551C
 
@@ -770,7 +869,7 @@ Symbol: GPIO_PORTF_DEN_R
    Definitions
       At line 68 in file main.s
    Uses
-      At line 191 in file main.s
+      At line 194 in file main.s
 Comment: GPIO_PORTF_DEN_R used once
 GPIO_PORTF_DIR_R 40025400
 
@@ -778,7 +877,7 @@ Symbol: GPIO_PORTF_DIR_R
    Definitions
       At line 65 in file main.s
    Uses
-      At line 182 in file main.s
+      At line 185 in file main.s
 Comment: GPIO_PORTF_DIR_R used once
 GPIO_PORTF_LOCK_R 40025520
 
@@ -786,7 +885,7 @@ Symbol: GPIO_PORTF_LOCK_R
    Definitions
       At line 69 in file main.s
    Uses
-      At line 170 in file main.s
+      At line 173 in file main.s
 Comment: GPIO_PORTF_LOCK_R used once
 GPIO_PORTF_PCTL_R 4002552C
 
@@ -794,7 +893,7 @@ Symbol: GPIO_PORTF_PCTL_R
    Definitions
       At line 72 in file main.s
    Uses
-      At line 179 in file main.s
+      At line 182 in file main.s
 Comment: GPIO_PORTF_PCTL_R used once
 GPIO_PORTF_PUR_R 40025510
 
@@ -802,27 +901,27 @@ Symbol: GPIO_PORTF_PUR_R
    Definitions
       At line 67 in file main.s
    Uses
-      At line 188 in file main.s
+      At line 191 in file main.s
 Comment: GPIO_PORTF_PUR_R used once
 GREEN 00000008
 
 Symbol: GREEN
    Definitions
       At line 91 in file main.s
-   Uses
-      None
-Comment: GREEN unused
 
 
 
 ARM Macro Assembler    Page 4 Alphabetic symbol ordering
 Absolute symbols
 
+   Uses
+      None
+Comment: GREEN unused
 ONESEC 00516155
 
 Symbol: ONESEC
    Definitions
-      At line 147 in file main.s
+      At line 149 in file main.s
    Uses
       None
 Comment: ONESEC unused
@@ -830,10 +929,11 @@ QUARTERSEC 00145855
 
 Symbol: QUARTERSEC
    Definitions
-      At line 148 in file main.s
+      At line 150 in file main.s
    Uses
-      None
-Comment: QUARTERSEC unused
+      At line 274 in file main.s
+      At line 279 in file main.s
+
 RED 00000002
 
 Symbol: RED
@@ -864,8 +964,8 @@ Symbol: SYSCTL_RCGCGPIO_R
    Definitions
       At line 94 in file main.s
    Uses
-      At line 164 in file main.s
-      At line 229 in file main.s
+      At line 167 in file main.s
+      At line 232 in file main.s
 
 28 symbols
-374 symbols in table
+377 symbols in table

@@ -102,12 +102,14 @@ Start
 ;    BL  PortF_Init                  ; initialize input and output pins of Port F
 	BL PortD_Init
 loop
-	MOV R0, #0x01
-	BL PortD_Output
-	LDR R0, =50000
-	BL delay
-	MOV R0, #0x0
-	BL PortD_Output
+	MOV R0, #12121
+	BL buzzer_pin_toggle_wPar
+;	MOV R0, #0x01
+;	BL buzzer_pin_toggle
+;	LDR R0, =ONESEC
+;	BL delay
+;	MOV R0, #0x0
+;	BL buzzer_pin_toggle
 ;    LDR R0, =FIFTHSEC               ; R0 = FIFTHSEC (delay 0.2 second)
 ;    BL  delay                       ; delay at least (3*R0) cycles
 ;    BL  PortF_Input                 ; read all of the switches on Port F
@@ -151,6 +153,7 @@ delay
     SUBS R0, R0, #1                 ; R0 = R0 - 1 (count = count - 1)
     BNE delay                       ; if count (R0) != 0, skip to 'delay'
     BX  LR                          ; return
+
 
 ;------------PortF_Init------------
 ; Initialize GPIO Port F for negative logic switches on PF0 and
@@ -214,13 +217,13 @@ PortF_Input
 ; Output: none
 ; Modifies: R1
 PortF_Output
-    LDR R1, =GPIO_PORTF_DATA_R ; pointer to Port F data
-    STR R0, [R1]               ; write to PF3-1
+    LDR R1, =GPIO_PORTF_DATA_R 	; pointer to Port F data
+    STR R0, [R1]               	; write to PF3-1
     BX  LR                    
 
 
 ;------------PortD_Init------------
-; Initialize GPIO Port D for GPIA PD0. Weak internal pull-up
+; Initialize GPIO Port D for GPIO PD0. Weak internal pull-up
 ; resistors are enabled.
 ; Input: none
 ; Output: none
@@ -228,7 +231,7 @@ PortF_Output
 PortD_Init
     LDR R1, =SYSCTL_RCGCGPIO_R      ; 1) activate clock for Port D
     LDR R0, [R1]                 
-    ORR R0, R0, #0x08               ; set bit 5 to turn on clock
+    ORR R0, R0, #0x08               ; set bit 5 to turn on clock for Port D
     STR R0, [R1]                  
     NOP
     NOP                             ; allow time for clock to finish
@@ -258,18 +261,59 @@ PortD_Init
     STR R0, [R1]                   
     BX  LR      
 
-;------------PortD_Output------------
-; Set the output state of PD0-1.
-; Input: R0  new state of PD
+;------------buzzer_pin_toggle------------
+; Toggles output state of PD0 to high or low @ 4HZ.
+; Input: R0 new state of PD0, R3 frequency
 ; Output: none
 ; Modifies: R1
-PortD_Output
-    LDR R1, =GPIO_PORTD_DATA_R ; pointer to Port D data
-    STR R0, [R1]               ; write to PD0-1
+buzzer_pin_toggle
+	PUSH {LR}					; Push to save the current branch of the link register	
+	MOV R0, #0x01				; Turn ON PD0
+    LDR R1, =GPIO_PORTD_DATA_R 	; pointer to Port D data
+    STR R0, [R1]               	; write to PD0
+	LDR R0, =QUARTERSEC			; Toggle @ 4Hz
+	BL delay					; Branch to delay
+	MOV R0, #0x00				; Turn OFF PD0
+	LDR R1, =GPIO_PORTD_DATA_R 	; pointer to Port D data
+    STR R0, [R1]               	; write to PD0
+	LDR R0, =QUARTERSEC			; Toggle @ 4Hz
+	BL delay					; Branch to delay
+	POP {LR}					; POP the brach address from memory
     BX  LR                    
 
 
+;------------buzzer_pin_toggle_wPar------------
+; Toggles output state of PD0 as per user provided paramter 
+; Input: R0 cycles
+; Output: none
+; Modifies: R1, R4, R5
+buzzer_pin_toggle_wPar
+	PUSH {LR}					; Save address of the main loop
+	MOV R4, R0					; Move user paramnter to R4 to for ON delay calculations
+	MOV R5, R0					; Move user paramnter to R5 to for OFF delay calculations
+My_turnON_delay_loop 
+	MOV R0, #0x01				; Turn ON PD0
+    LDR R1, =GPIO_PORTD_DATA_R 	; pointer to Port D data
+    STR R0, [R1]               	; write to PD0
+	BL delay					; delay
+	SUBS R4, #1					; Counter decerment
+	CMP R4, #0					; Counter comparision
+	BNE My_turnON_delay_loop
+My_turnOFF_delay_loop
+	MOV R0, #0x00				; Turn OFF PD0
+    LDR R1, =GPIO_PORTD_DATA_R 	; pointer to Port D data
+    STR R0, [R1]               	; write to PD0 
+	MOV R0, #0x01				; R0 back to 1 to delay by 1 cycle
+	BL delay					; delay
+	SUBS R5, #1					; Counter decerment
+	CMP R5, #0					; Counter comparision
+	BNE My_turnOFF_delay_loop
+	POP {LR}
+	BX LR						; Back to main
+	
 
 
-    ALIGN                           ; make sure the end of this section is aligned
-    END                             ; end of file
+
+
+    ALIGN                          ; make sure the end of this section is aligned
+    END                            ; end of file
