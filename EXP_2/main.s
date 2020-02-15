@@ -318,7 +318,7 @@ My_turnOFF_delay_loop
 	SUBS R5, #1					; Counter decerment
 	CMP R5, #0					; Counter comparision
 	BNE My_turnOFF_delay_loop
-	POP {LR}
+	POP {LR}					
 	BX LR						; Back to main
 	
 

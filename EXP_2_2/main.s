@@ -113,7 +113,7 @@ SYSCTL_RCGCGPIO_R  EQU   0x400FE608
 Start
     BL  PortF_Init                  ; initialize input and output pins of Port F
 	BL  PortD_Init					; initialize Port D Pin 0 (PD0)
-	MOV R6, #0x00
+	MOV R6, #0x00					; R4 is the seed for PD0 toggle (start with 0)
 loop
 ;    LDR R0, =FIFTHSEC               ; R0 = FIFTHSEC (delay 0.2 second)
 ;    BL  delay                       ; delay at least (3*R0) cycles
@@ -272,13 +272,13 @@ PortD_Init
     STR R0, [R1]                   
     BX  LR      
 
-;------------buzzer_pin_toggle------------
+;------------buzzer_pin_toggle (Square Wave)------------
 ; Toggles output state of PD0 to high or low @ 4HZ.
 ; Input: R0 new state of PD0, R3 frequency
 ; Output: none
 ; Modifies: R1
 buzzer_pin_toggle
-	PUSH {LR}					; Push to save the current branch of the link register	
+	PUSH {LR}					; Save the branch of the link register into the stack 	
 	MOV R0, #0x01				; Turn ON PD0
     LDR R1, =GPIO_PORTD_DATA_R 	; pointer to Port D data
     STR R0, [R1]               	; write to PD0
@@ -289,55 +289,28 @@ buzzer_pin_toggle
     STR R0, [R1]               	; write to PD0
 	LDR R0, =QUARTERSEC			; Toggle @ 4Hz
 	BL delay					; Branch to delay
-	POP {LR}					; POP the brach address from memory
-    BX  LR                    
+	POP {LR}					; Reterive the brach address from stack
+    BX  LR                    	; Back to previous loop
+
+
 
 
 ;------------buzzer_pin_toggle_wPar------------
 ; Toggles output state of PD0 as per user provided paramter 
-; Input: R0 cycles
+; Input: R4 cycles
 ; Output: none
-; Modifies: R1, R4, R5
-;buzzer_pin_toggle_wPar
-;	PUSH {LR}					; Save address of the main loop
-;	MOV R4, R0					; Move user paramnter to R4 to for ON delay calculations
-;	MOV R5, R0					; Move user paramnter to R5 to for OFF delay calculations
-;My_turnON_delay_loop 
-;	MOV R0, #0x01				; Turn ON PD0
-;    LDR R1, =GPIO_PORTD_DATA_R 	; pointer to Port D data
-;    STR R0, [R1]               	; write to PD0
-;	BL delay					; delay
-;	SUBS R4, #1					; Counter decerment
-;	CMP R4, #0					; Counter comparision
-;	BNE My_turnON_delay_loop
-;My_turnOFF_delay_loop
-;	MOV R0, #0x00				; Turn OFF PD0
-;    LDR R1, =GPIO_PORTD_DATA_R 	; pointer to Port D data
-;    STR R0, [R1]               	; write to PD0 
-;	MOV R0, #0x01				; R0 back to 1 to delay by 1 cycle
-;	BL delay					; delay
-;	SUBS R5, #1					; Counter decerment
-;	CMP R5, #0					; Counter comparision
-;	BNE My_turnOFF_delay_loop
-;	POP {LR}
-;	BX LR						; Back to main
-
-;------------buzzer_pin_toggle_wPar------------
-; Toggles output state of PD0 as per user provided paramter 
-; Input: R0 cycles
-; Output: none
-; Modifies: R0, R1, R6
+; Modifies: R0, R1, R4, R6
 buzzer_pin_toggle_wPar
-	PUSH {LR}					; Save address of the main loop
+	PUSH {LR}					; Save the branch of the link register into the stack
 	LDR R1, =GPIO_PORTD_DATA_R 	; pointer to Port D data
-	EOR R6, R6, #0x01			; togglebit 1
-	STR R6,[R1]					; update
-	MOV R0, #0x01				; R0 back to 1 to delay by 1 cycle
+	EOR R6, R6, #0x01			; togglebit 1 using XOR logic (Toggles High to low)
+	STR R6,[R1]					; Write to PD0
+	MOV R0, #0x01				; R0 back to 1 to delay by 1 cycle (Housekeeping) 
 	BL delay					; delay
-	SUBS R4, R4, #1				; Counter decerment
-	POP {LR}
+	SUBS R4, R4, #1				; Counter decerment (R4 = R4 -1)
+	POP {LR}					; Reterive the brach address from stack
 	BNE buzzer_pin_toggle_wPar
-	BX LR						; Back to main
+	BX LR						; Back to previous loop
 
-    ALIGN                          ; make sure the end of this section is aligned
-    END                            ; end of file
+    ALIGN                       ; make sure the end of this section is aligned
+    END                         ; end of file

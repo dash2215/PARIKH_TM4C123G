@@ -224,7 +224,9 @@ ARM Macro Assembler    Page 4
                                                             Port F
   115 00000004 F000 F863       BL               PortD_Init  ; initialize Port D
                                                              Pin 0 (PD0)
-  116 00000008 F04F 0600       MOV              R6, #0x00
+  116 00000008 F04F 0600       MOV              R6, #0x00   ; R4 is the seed fo
+                                                            r PD0 toggle (start
+                                                             with 0)
   117 0000000C         loop
   118 0000000C         ;    LDR R0, =FIFTHSEC               ; R0 = FIFTHSEC (de
                        lay 0.2 second)
@@ -256,14 +258,14 @@ ARM Macro Assembler    Page 4
                                                             ED on)
   135 0000002E F000 F84B       BL               PortF_Output ; turn the blue LE
                                                             D on
-  136 00000032 F642 7459       MOV              R4, #12121  ; 440 Hz for speake
-                                                            r
 
 
 
 ARM Macro Assembler    Page 5 
 
 
+  136 00000032 F642 7459       MOV              R4, #12121  ; 440 Hz for speake
+                                                            r
   137 00000036 F000 F883       BL               buzzer_pin_toggle_wPar ; PD0 ou
                                                             tput function
   138 0000003A E7E7            B                loop
@@ -321,14 +323,14 @@ ARM Macro Assembler    Page 5
   166 0000006E 4770            BX               LR          ; return
   167 00000070         
   168 00000070         
-  169 00000070         ;------------PortF_Init------------
-  170 00000070         ; Initialize GPIO Port F for negative logic switches on 
 
 
 
 ARM Macro Assembler    Page 6 
 
 
+  169 00000070         ;------------PortF_Init------------
+  170 00000070         ; Initialize GPIO Port F for negative logic switches on 
                        PF0 and
   171 00000070         ; PF4 as the Launchpad is wired.  Weak internal pull-up
   172 00000070         ; resistors are enabled, and the NMI functionality on PF
@@ -386,14 +388,14 @@ ARM Macro Assembler    Page 6
   202 000000AC 4933            LDR              R1, =GPIO_PORTF_PUR_R ; pull-up
                                                              resistors for PF4,
                                                             PF0
-  203 000000AE F04F 0011       MOV              R0, #0x11   ; enable weak pull-
-                                                            up on PF0 and PF4
 
 
 
 ARM Macro Assembler    Page 7 
 
 
+  203 000000AE F04F 0011       MOV              R0, #0x11   ; enable weak pull-
+                                                            up on PF0 and PF4
   204 000000B2 6008            STR              R0, [R1]
   205 000000B4 4932            LDR              R1, =GPIO_PORTF_DEN_R ; 7) enab
                                                             le Port F digital p
@@ -451,14 +453,14 @@ ARM Macro Assembler    Page 7
                                                             t D
   246 000000D6 6008            STR              R0, [R1]
   247 000000D8 BF00            NOP
-  248 000000DA BF00            NOP                          ; allow time for cl
-                                                            ock to finish
 
 
 
 ARM Macro Assembler    Page 8 
 
 
+  248 000000DA BF00            NOP                          ; allow time for cl
+                                                            ock to finish
   249 000000DC 492A            LDR              R1, =GPIO_PORTD_LOCK_R ; 2) unl
                                                             ock the lock regist
                                                             er
@@ -505,25 +507,26 @@ ARM Macro Assembler    Page 8
   272 00000118 6008            STR              R0, [R1]
   273 0000011A 4770            BX               LR
   274 0000011C         
-  275 0000011C         ;------------buzzer_pin_toggle------------
+  275 0000011C         ;------------buzzer_pin_toggle (Square Wave)------------
+                       
   276 0000011C         ; Toggles output state of PD0 to high or low @ 4HZ.
   277 0000011C         ; Input: R0 new state of PD0, R3 frequency
   278 0000011C         ; Output: none
   279 0000011C         ; Modifies: R1
   280 0000011C         buzzer_pin_toggle
-  281 0000011C B500            PUSH             {LR}        ; Push to save the 
-                                                            current branch of t
-                                                            he link register 
+  281 0000011C B500            PUSH             {LR}        ; Save the branch o
+                                                            f the link register
+                                                             into the stack  
   282 0000011E F04F 0001       MOV              R0, #0x01   ; Turn ON PD0
-  283 00000122 4921            LDR              R1, =GPIO_PORTD_DATA_R ; pointe
-                                                            r to Port D data
-  284 00000124 6008            STR              R0, [R1]    ; write to PD0
 
 
 
 ARM Macro Assembler    Page 9 
 
 
+  283 00000122 4921            LDR              R1, =GPIO_PORTD_DATA_R ; pointe
+                                                            r to Port D data
+  284 00000124 6008            STR              R0, [R1]    ; write to PD0
   285 00000126 4821            LDR              R0, =QUARTERSEC ; Toggle @ 4Hz
   286 00000128 F7FF FF9F       BL               delay       ; Branch to delay
   287 0000012C F04F 0000       MOV              R0, #0x00   ; Turn OFF PD0
@@ -532,83 +535,60 @@ ARM Macro Assembler    Page 9
   289 00000132 6008            STR              R0, [R1]    ; write to PD0
   290 00000134 481D            LDR              R0, =QUARTERSEC ; Toggle @ 4Hz
   291 00000136 F7FF FF98       BL               delay       ; Branch to delay
-  292 0000013A F85D EB04       POP              {LR}        ; POP the brach add
-                                                            ress from memory
-  293 0000013E 4770            BX               LR
+  292 0000013A F85D EB04       POP              {LR}        ; Reterive the brac
+                                                            h address from stac
+                                                            k
+  293 0000013E 4770            BX               LR          ; Back to previous 
+                                                            loop
   294 00000140         
   295 00000140         
-  296 00000140         ;------------buzzer_pin_toggle_wPar------------
-  297 00000140         ; Toggles output state of PD0 as per user provided param
+  296 00000140         
+  297 00000140         
+  298 00000140         ;------------buzzer_pin_toggle_wPar------------
+  299 00000140         ; Toggles output state of PD0 as per user provided param
                        ter 
-  298 00000140         ; Input: R0 cycles
-  299 00000140         ; Output: none
-  300 00000140         ; Modifies: R1, R4, R5
-  301 00000140         ;buzzer_pin_toggle_wPar
-  302 00000140         ; PUSH {LR}     ; Save address of the main loop
-  303 00000140         ; MOV R4, R0     ; Move user paramnter to R4 to for ON d
-                       elay calculations
-  304 00000140         ; MOV R5, R0     ; Move user paramnter to R5 to for OFF 
-                       delay calculations
-  305 00000140         ;My_turnON_delay_loop 
-  306 00000140         ; MOV R0, #0x01    ; Turn ON PD0
-  307 00000140         ;    LDR R1, =GPIO_PORTD_DATA_R  ; pointer to Port D dat
-                       a
-  308 00000140         ;    STR R0, [R1]                ; write to PD0
-  309 00000140         ; BL delay     ; delay
-  310 00000140         ; SUBS R4, #1     ; Counter decerment
-  311 00000140         ; CMP R4, #0     ; Counter comparision
-  312 00000140         ; BNE My_turnON_delay_loop
-  313 00000140         ;My_turnOFF_delay_loop
-  314 00000140         ; MOV R0, #0x00    ; Turn OFF PD0
-  315 00000140         ;    LDR R1, =GPIO_PORTD_DATA_R  ; pointer to Port D dat
-                       a
-  316 00000140         ;    STR R0, [R1]                ; write to PD0 
-  317 00000140         ; MOV R0, #0x01    ; R0 back to 1 to delay by 1 cycle
-  318 00000140         ; BL delay     ; delay
-  319 00000140         ; SUBS R5, #1     ; Counter decerment
-  320 00000140         ; CMP R5, #0     ; Counter comparision
-  321 00000140         ; BNE My_turnOFF_delay_loop
-  322 00000140         ; POP {LR}
-  323 00000140         ; BX LR      ; Back to main
-  324 00000140         
-  325 00000140         ;------------buzzer_pin_toggle_wPar------------
-  326 00000140         ; Toggles output state of PD0 as per user provided param
-                       ter 
-  327 00000140         ; Input: R0 cycles
-  328 00000140         ; Output: none
-  329 00000140         ; Modifies: R0, R1, R6
-  330 00000140         buzzer_pin_toggle_wPar
-  331 00000140 B500            PUSH             {LR}        ; Save address of t
-                                                            he main loop
-  332 00000142 4919            LDR              R1, =GPIO_PORTD_DATA_R ; pointe
+  300 00000140         ; Input: R4 cycles
+  301 00000140         ; Output: none
+  302 00000140         ; Modifies: R0, R1, R4, R6
+  303 00000140         buzzer_pin_toggle_wPar
+  304 00000140 B500            PUSH             {LR}        ; Save the branch o
+                                                            f the link register
+                                                             into the stack
+  305 00000142 4919            LDR              R1, =GPIO_PORTD_DATA_R ; pointe
                                                             r to Port D data
-  333 00000144 F086 0601       EOR              R6, R6, #0x01 ; togglebit 1
-
-
-
-ARM Macro Assembler    Page 10 
-
-
-  334 00000148 600E            STR              R6,[R1]     ; update
-  335 0000014A F04F 0001       MOV              R0, #0x01   ; R0 back to 1 to d
-                                                            elay by 1 cycle
-  336 0000014E F7FF FF8C       BL               delay       ; delay
-  337 00000152 1E64            SUBS             R4, R4, #1  ; Counter decerment
-                                                            
-  338 00000154 F85D EB04       POP              {LR}
-  339 00000158 D1F2            BNE              buzzer_pin_toggle_wPar
-  340 0000015A 4770            BX               LR          ; Back to main
-  341 0000015C         
-  342 0000015C                 ALIGN                        ; make sure the end
+  306 00000144 F086 0601       EOR              R6, R6, #0x01 ; togglebit 1 usi
+                                                            ng XOR logic (Toggl
+                                                            es High to low)
+  307 00000148 600E            STR              R6,[R1]     ; Write to PD0
+  308 0000014A F04F 0001       MOV              R0, #0x01   ; R0 back to 1 to d
+                                                            elay by 1 cycle (Ho
+                                                            usekeeping) 
+  309 0000014E F7FF FF8C       BL               delay       ; delay
+  310 00000152 1E64            SUBS             R4, R4, #1  ; Counter decerment
+                                                             (R4 = R4 -1)
+  311 00000154 F85D EB04       POP              {LR}        ; Reterive the brac
+                                                            h address from stac
+                                                            k
+  312 00000158 D1F2            BNE              buzzer_pin_toggle_wPar
+  313 0000015A 4770            BX               LR          ; Back to previous 
+                                                            loop
+  314 0000015C         
+  315 0000015C                 ALIGN                        ; make sure the end
                                                              of this section is
                                                              aligned
-  343 0000015C                 END                          ; end of file
+  316 0000015C                 END                          ; end of file
               400FE608 
               40025520 
               4C4F434B 
               40025524 
               40025528 
               4002552C 
+
+
+
+ARM Macro Assembler    Page 10 
+
+
               40025400 
               40025420 
               40025510 
@@ -714,12 +694,12 @@ buzzer_pin_toggle_wPar 00000140
 
 Symbol: buzzer_pin_toggle_wPar
    Definitions
-      At line 330 in file main.s
+      At line 303 in file main.s
    Uses
       At line 137 in file main.s
       At line 143 in file main.s
       At line 149 in file main.s
-      At line 339 in file main.s
+      At line 312 in file main.s
 
 delay 0000006A
 
@@ -730,7 +710,7 @@ Symbol: delay
       At line 165 in file main.s
       At line 286 in file main.s
       At line 291 in file main.s
-      At line 336 in file main.s
+      At line 309 in file main.s
 
 loop 0000000C
 
@@ -838,7 +818,7 @@ Symbol: GPIO_PORTD_DATA_R
    Uses
       At line 283 in file main.s
       At line 288 in file main.s
-      At line 332 in file main.s
+      At line 305 in file main.s
 
 
 
