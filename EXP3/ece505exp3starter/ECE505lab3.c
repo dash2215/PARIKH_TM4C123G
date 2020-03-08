@@ -157,7 +157,7 @@ int main(void)
 
 					case 'g':
 					Green_led_status = GPIOPinRead(GPIO_PORTF_BASE,GPIO_PIN_3); 
-					// UARTprintf(" Green Led Status %x\n", Green_led_status);		<- Debug Line
+					UARTprintf(" Green Led Status %x\n", Green_led_status);		// <- Debug Line
 					if(Green_led_status == 0)
 					{
 						GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_3, GPIO_PIN_3);
@@ -170,7 +170,7 @@ int main(void)
 					
 					case 'r': 
 					Red_led_status = GPIOPinRead(GPIO_PORTF_BASE,GPIO_PIN_1); 
-					// UARTprintf(" Red Led Status %x\n", Red_led_status);			<- Debug Line
+					UARTprintf(" Red Led Status %x\n", Red_led_status);			// <- Debug Line
 					if(Red_led_status == 0)
 					{
 						GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, GPIO_PIN_1);
@@ -183,7 +183,7 @@ int main(void)
 					
 					case 'b': 
 					Blue_led_status = GPIOPinRead(GPIO_PORTF_BASE,GPIO_PIN_2); 
-					// UARTprintf(" Blue Led Status %x\n", Blue_led_status); <- Debug Line
+					UARTprintf(" Blue Led Status %x\n", Blue_led_status); // <- Debug Line
 					if(Blue_led_status == 0)
 					{
 						GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_2, GPIO_PIN_2);
