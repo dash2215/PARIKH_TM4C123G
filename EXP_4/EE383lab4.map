@@ -11,19 +11,25 @@ Section Cross References
     ece473lab3.o(i.ADCInit) refers to adc.o(i.ADCSequenceStepConfigure) for ADCSequenceStepConfigure
     ece473lab3.o(i.ADCInit) refers to adc.o(i.ADCSequenceEnable) for ADCSequenceEnable
     ece473lab3.o(i.ADCInit) refers to adc.o(i.ADCIntClear) for ADCIntClear
+    ece473lab3.o(i.ADCInit_RangeSenor) refers to sysctl.o(i.SysCtlPeripheralEnable) for SysCtlPeripheralEnable
+    ece473lab3.o(i.ADCInit_RangeSenor) refers to adc.o(i.ADCSequenceConfigure) for ADCSequenceConfigure
+    ece473lab3.o(i.ADCInit_RangeSenor) refers to adc.o(i.ADCSequenceStepConfigure) for ADCSequenceStepConfigure
+    ece473lab3.o(i.ADCInit_RangeSenor) refers to adc.o(i.ADCSequenceEnable) for ADCSequenceEnable
+    ece473lab3.o(i.ADCInit_RangeSenor) refers to adc.o(i.ADCIntClear) for ADCIntClear
     ece473lab3.o(i.InitConsole) refers to sysctl.o(i.SysCtlPeripheralEnable) for SysCtlPeripheralEnable
     ece473lab3.o(i.InitConsole) refers to gpio.o(i.GPIOPinConfigure) for GPIOPinConfigure
     ece473lab3.o(i.InitConsole) refers to uart.o(i.UARTClockSourceSet) for UARTClockSourceSet
     ece473lab3.o(i.InitConsole) refers to gpio.o(i.GPIOPinTypeUART) for GPIOPinTypeUART
     ece473lab3.o(i.InitConsole) refers to uartstdio.o(i.UARTStdioConfig) for UARTStdioConfig
     ece473lab3.o(i.PrintTemps) refers to uartstdio.o(i.UARTprintf) for UARTprintf
-    ece473lab3.o(i.PrintTime) refers to uartstdio.o(i.UARTprintf) for UARTprintf
-    ece473lab3.o(i.PrintTime) refers to ece473lab3.o(.data) for time_msec
+    ece473lab3.o(i.Print_Distance_Time) refers to uartstdio.o(i.UARTprintf) for UARTprintf
+    ece473lab3.o(i.Print_Distance_Time) refers to ece473lab3.o(.data) for time_msec
     ece473lab3.o(i.SysTick_IRQ_Handler) refers to ece473lab3.o(.data) for time_msec
     ece473lab3.o(i.main) refers to sysctl.o(i.SysCtlClockSet) for SysCtlClockSet
     ece473lab3.o(i.main) refers to sysctl.o(i.SysCtlPeripheralEnable) for SysCtlPeripheralEnable
     ece473lab3.o(i.main) refers to gpio.o(i.GPIOPinTypeGPIOOutput) for GPIOPinTypeGPIOOutput
     ece473lab3.o(i.main) refers to gpio.o(i.GPIOPinTypeGPIOInput) for GPIOPinTypeGPIOInput
+    ece473lab3.o(i.main) refers to gpio.o(i.GPIOPinTypeADC) for GPIOPinTypeADC
     ece473lab3.o(i.main) refers to gpio.o(i.GPIOPadConfigSet) for GPIOPadConfigSet
     ece473lab3.o(i.main) refers to gpio.o(i.GPIOIntTypeSet) for GPIOIntTypeSet
     ece473lab3.o(i.main) refers to gpio.o(i.GPIOIntRegister) for GPIOIntRegister
@@ -34,12 +40,12 @@ Section Cross References
     ece473lab3.o(i.main) refers to systick.o(i.SysTickIntEnable) for SysTickIntEnable
     ece473lab3.o(i.main) refers to ece473lab3.o(i.InitConsole) for InitConsole
     ece473lab3.o(i.main) refers to uartstdio.o(i.UARTprintf) for UARTprintf
-    ece473lab3.o(i.main) refers to ece473lab3.o(i.ADCInit) for ADCInit
+    ece473lab3.o(i.main) refers to ece473lab3.o(i.ADCInit_RangeSenor) for ADCInit_RangeSenor
     ece473lab3.o(i.main) refers to adc.o(i.ADCProcessorTrigger) for ADCProcessorTrigger
     ece473lab3.o(i.main) refers to adc.o(i.ADCIntStatus) for ADCIntStatus
     ece473lab3.o(i.main) refers to adc.o(i.ADCIntClear) for ADCIntClear
     ece473lab3.o(i.main) refers to adc.o(i.ADCSequenceDataGet) for ADCSequenceDataGet
-    ece473lab3.o(i.main) refers to ece473lab3.o(i.PrintTime) for PrintTime
+    ece473lab3.o(i.main) refers to ece473lab3.o(i.Print_Distance_Time) for Print_Distance_Time
     ece473lab3.o(i.main) refers to sysctl.o(i.SysCtlClockGet) for SysCtlClockGet
     ece473lab3.o(i.main) refers to sysctl.o(.emb_text) for SysCtlDelay
     ece473lab3.o(i.main) refers to ece473lab3.o(i.switchInterrupt) for switchInterrupt
@@ -186,6 +192,7 @@ Removing Unused input sections from the image.
 
     Removing startup.o(HEAP), (0 bytes).
     Removing startup.o(.text), (28 bytes).
+    Removing ece473lab3.o(i.ADCInit), (96 bytes).
     Removing ece473lab3.o(i.PrintTemps), (40 bytes).
     Removing gpio.o(i.GPIOADCTriggerDisable), (12 bytes).
     Removing gpio.o(i.GPIOADCTriggerEnable), (12 bytes).
@@ -198,7 +205,6 @@ Removing Unused input sections from the image.
     Removing gpio.o(i.GPIOIntTypeGet), (84 bytes).
     Removing gpio.o(i.GPIOIntUnregister), (26 bytes).
     Removing gpio.o(i.GPIOPadConfigGet), (146 bytes).
-    Removing gpio.o(i.GPIOPinTypeADC), (30 bytes).
     Removing gpio.o(i.GPIOPinTypeCAN), (30 bytes).
     Removing gpio.o(i.GPIOPinTypeComparator), (30 bytes).
     Removing gpio.o(i.GPIOPinTypeEPI), (30 bytes).
@@ -346,7 +352,7 @@ Removing Unused input sections from the image.
     Removing systick.o(i.SysTickPeriodGet), (10 bytes).
     Removing systick.o(i.SysTickValueGet), (8 bytes).
 
-161 unused section(s) (total 4374 bytes) removed from the image.
+161 unused section(s) (total 4440 bytes) removed from the image.
 
 ==============================================================================
 
@@ -358,19 +364,19 @@ Image Symbol Table
 
     RESET                                    0x00000000   Section      660  startup.o(RESET)
     ../clib/../cmprslib/zerorunl.c           0x00000000   Number         0  __dczerorl.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
     ECE473lab3.c                             0x00000000   Number         0  ece473lab3.o ABSOLUTE
     dc.s                                     0x00000000   Number         0  dc.o ABSOLUTE
     driverlib\\cpu.c                         0x00000000   Number         0  cpu.o ABSOLUTE
@@ -401,7 +407,7 @@ Image Symbol Table
     $v0                                      0x000002a8   Number         0  sysctl.o(.emb_text)
     .text                                    0x000002b0   Section       36  init.o(.text)
     .text                                    0x000002d4   Section        0  __dczerorl.o(.text)
-    i.ADCInit                                0x00000310   Section        0  ece473lab3.o(i.ADCInit)
+    i.ADCInit_RangeSenor                     0x00000310   Section        0  ece473lab3.o(i.ADCInit_RangeSenor)
     i.ADCIntClear                            0x00000370   Section        0  adc.o(i.ADCIntClear)
     i.ADCIntStatus                           0x00000378   Section        0  adc.o(i.ADCIntStatus)
     i.ADCProcessorTrigger                    0x000003ae   Section        0  adc.o(i.ADCProcessorTrigger)
@@ -418,55 +424,56 @@ Image Symbol Table
     i.GPIOPadConfigSet                       0x00000584   Section        0  gpio.o(i.GPIOPadConfigSet)
     i.GPIOPinConfigure                       0x0000065c   Section        0  gpio.o(i.GPIOPinConfigure)
     i.GPIOPinRead                            0x000006ac   Section        0  gpio.o(i.GPIOPinRead)
-    i.GPIOPinTypeGPIOInput                   0x000006b8   Section        0  gpio.o(i.GPIOPinTypeGPIOInput)
-    i.GPIOPinTypeGPIOOutput                  0x000006d6   Section        0  gpio.o(i.GPIOPinTypeGPIOOutput)
-    i.GPIOPinTypeUART                        0x000006f4   Section        0  gpio.o(i.GPIOPinTypeUART)
-    i.GPIOPinWrite                           0x00000712   Section        0  gpio.o(i.GPIOPinWrite)
-    i.InitConsole                            0x0000071c   Section        0  ece473lab3.o(i.InitConsole)
-    i.IntEnable                              0x00000768   Section        0  interrupt.o(i.IntEnable)
-    i.IntRegister                            0x000007dc   Section        0  interrupt.o(i.IntRegister)
-    i.PrintTime                              0x00000818   Section        0  ece473lab3.o(i.PrintTime)
-    i.SysCtlClockGet                         0x00000850   Section        0  sysctl.o(i.SysCtlClockGet)
-    i.SysCtlClockSet                         0x00000958   Section        0  sysctl.o(i.SysCtlClockSet)
-    i.SysCtlPeripheralEnable                 0x00000a94   Section        0  sysctl.o(i.SysCtlPeripheralEnable)
-    i.SysCtlPeripheralPresent                0x00000ac8   Section        0  sysctl.o(i.SysCtlPeripheralPresent)
-    i.SysTickEnable                          0x00000b00   Section        0  systick.o(i.SysTickEnable)
-    i.SysTickIntEnable                       0x00000b12   Section        0  systick.o(i.SysTickIntEnable)
-    i.SysTickIntRegister                     0x00000b24   Section        0  systick.o(i.SysTickIntRegister)
-    i.SysTickPeriodSet                       0x00000b42   Section        0  systick.o(i.SysTickPeriodSet)
-    i.SysTick_IRQ_Handler                    0x00000b4c   Section        0  ece473lab3.o(i.SysTick_IRQ_Handler)
-    i.UARTCharPut                            0x00000bb0   Section        0  uart.o(i.UARTCharPut)
-    i.UARTClockSourceSet                     0x00000bc0   Section        0  uart.o(i.UARTClockSourceSet)
-    i.UARTConfigSetExpClk                    0x00000bc6   Section        0  uart.o(i.UARTConfigSetExpClk)
-    i.UARTDisable                            0x00000c12   Section        0  uart.o(i.UARTDisable)
-    i.UARTEnable                             0x00000c32   Section        0  uart.o(i.UARTEnable)
-    i.UARTStdioConfig                        0x00000c48   Section        0  uartstdio.o(i.UARTStdioConfig)
-    i.UARTprintf                             0x00000c98   Section        0  uartstdio.o(i.UARTprintf)
-    i.UARTvprintf                            0x00000cb4   Section        0  uartstdio.o(i.UARTvprintf)
-    i.UARTwrite                              0x00000f04   Section        0  uartstdio.o(i.UARTwrite)
-    i.__scatterload_copy                     0x00000f38   Section       14  handlers.o(i.__scatterload_copy)
-    i.__scatterload_null                     0x00000f46   Section        2  handlers.o(i.__scatterload_null)
-    i.__scatterload_zeroinit                 0x00000f48   Section       14  handlers.o(i.__scatterload_zeroinit)
-    i.delay                                  0x00000f56   Section        0  ece473lab3.o(i.delay)
-    i.main                                   0x00000f64   Section        0  ece473lab3.o(i.main)
-    i.switchInterrupt                        0x0000110c   Section        0  ece473lab3.o(i.switchInterrupt)
-    .constdata                               0x0000114c   Section      312  gpio.o(.constdata)
-    g_ppui32GPIOIntMapBlizzard               0x0000114c   Data         192  gpio.o(.constdata)
-    g_pui32GPIOBaseAddrs                     0x0000120c   Data         120  gpio.o(.constdata)
-    .constdata                               0x00001284   Section      108  sysctl.o(.constdata)
-    g_pui32Xtals                             0x00001284   Data         108  sysctl.o(.constdata)
-    .constdata                               0x000012f0   Section      268  interrupt.o(.constdata)
-    g_pui32Priority                          0x000012f0   Data          32  interrupt.o(.constdata)
-    g_pui32Regs                              0x00001310   Data         156  interrupt.o(.constdata)
-    g_pui32EnRegs                            0x000013ac   Data          20  interrupt.o(.constdata)
-    g_pui32Dii16Regs                         0x000013c0   Data          20  interrupt.o(.constdata)
-    g_pui32PendRegs                          0x000013d4   Data          20  interrupt.o(.constdata)
-    g_pui32UnpendRegs                        0x000013e8   Data          20  interrupt.o(.constdata)
-    .constdata                               0x000013fc   Section       28  uartstdio.o(.constdata)
-    g_pcHex                                  0x000013fc   Data           4  uartstdio.o(.constdata)
-    g_ui32UARTBase                           0x00001400   Data          12  uartstdio.o(.constdata)
-    g_ui32UARTPeriph                         0x0000140c   Data          12  uartstdio.o(.constdata)
-    .conststring                             0x00001418   Section       17  uartstdio.o(.conststring)
+    i.GPIOPinTypeADC                         0x000006b8   Section        0  gpio.o(i.GPIOPinTypeADC)
+    i.GPIOPinTypeGPIOInput                   0x000006d6   Section        0  gpio.o(i.GPIOPinTypeGPIOInput)
+    i.GPIOPinTypeGPIOOutput                  0x000006f4   Section        0  gpio.o(i.GPIOPinTypeGPIOOutput)
+    i.GPIOPinTypeUART                        0x00000712   Section        0  gpio.o(i.GPIOPinTypeUART)
+    i.GPIOPinWrite                           0x00000730   Section        0  gpio.o(i.GPIOPinWrite)
+    i.InitConsole                            0x0000073c   Section        0  ece473lab3.o(i.InitConsole)
+    i.IntEnable                              0x00000788   Section        0  interrupt.o(i.IntEnable)
+    i.IntRegister                            0x000007fc   Section        0  interrupt.o(i.IntRegister)
+    i.Print_Distance_Time                    0x00000838   Section        0  ece473lab3.o(i.Print_Distance_Time)
+    i.SysCtlClockGet                         0x00000888   Section        0  sysctl.o(i.SysCtlClockGet)
+    i.SysCtlClockSet                         0x00000990   Section        0  sysctl.o(i.SysCtlClockSet)
+    i.SysCtlPeripheralEnable                 0x00000acc   Section        0  sysctl.o(i.SysCtlPeripheralEnable)
+    i.SysCtlPeripheralPresent                0x00000b00   Section        0  sysctl.o(i.SysCtlPeripheralPresent)
+    i.SysTickEnable                          0x00000b38   Section        0  systick.o(i.SysTickEnable)
+    i.SysTickIntEnable                       0x00000b4a   Section        0  systick.o(i.SysTickIntEnable)
+    i.SysTickIntRegister                     0x00000b5c   Section        0  systick.o(i.SysTickIntRegister)
+    i.SysTickPeriodSet                       0x00000b7a   Section        0  systick.o(i.SysTickPeriodSet)
+    i.SysTick_IRQ_Handler                    0x00000b84   Section        0  ece473lab3.o(i.SysTick_IRQ_Handler)
+    i.UARTCharPut                            0x00000be8   Section        0  uart.o(i.UARTCharPut)
+    i.UARTClockSourceSet                     0x00000bf8   Section        0  uart.o(i.UARTClockSourceSet)
+    i.UARTConfigSetExpClk                    0x00000bfe   Section        0  uart.o(i.UARTConfigSetExpClk)
+    i.UARTDisable                            0x00000c4a   Section        0  uart.o(i.UARTDisable)
+    i.UARTEnable                             0x00000c6a   Section        0  uart.o(i.UARTEnable)
+    i.UARTStdioConfig                        0x00000c80   Section        0  uartstdio.o(i.UARTStdioConfig)
+    i.UARTprintf                             0x00000cd0   Section        0  uartstdio.o(i.UARTprintf)
+    i.UARTvprintf                            0x00000cec   Section        0  uartstdio.o(i.UARTvprintf)
+    i.UARTwrite                              0x00000f3c   Section        0  uartstdio.o(i.UARTwrite)
+    i.__scatterload_copy                     0x00000f70   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x00000f7e   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x00000f80   Section       14  handlers.o(i.__scatterload_zeroinit)
+    i.delay                                  0x00000f8e   Section        0  ece473lab3.o(i.delay)
+    i.main                                   0x00000f9c   Section        0  ece473lab3.o(i.main)
+    i.switchInterrupt                        0x0000113c   Section        0  ece473lab3.o(i.switchInterrupt)
+    .constdata                               0x0000117c   Section      312  gpio.o(.constdata)
+    g_ppui32GPIOIntMapBlizzard               0x0000117c   Data         192  gpio.o(.constdata)
+    g_pui32GPIOBaseAddrs                     0x0000123c   Data         120  gpio.o(.constdata)
+    .constdata                               0x000012b4   Section      108  sysctl.o(.constdata)
+    g_pui32Xtals                             0x000012b4   Data         108  sysctl.o(.constdata)
+    .constdata                               0x00001320   Section      268  interrupt.o(.constdata)
+    g_pui32Priority                          0x00001320   Data          32  interrupt.o(.constdata)
+    g_pui32Regs                              0x00001340   Data         156  interrupt.o(.constdata)
+    g_pui32EnRegs                            0x000013dc   Data          20  interrupt.o(.constdata)
+    g_pui32Dii16Regs                         0x000013f0   Data          20  interrupt.o(.constdata)
+    g_pui32PendRegs                          0x00001404   Data          20  interrupt.o(.constdata)
+    g_pui32UnpendRegs                        0x00001418   Data          20  interrupt.o(.constdata)
+    .constdata                               0x0000142c   Section       28  uartstdio.o(.constdata)
+    g_pcHex                                  0x0000142c   Data           4  uartstdio.o(.constdata)
+    g_ui32UARTBase                           0x00001430   Data          12  uartstdio.o(.constdata)
+    g_ui32UARTPeriph                         0x0000143c   Data          12  uartstdio.o(.constdata)
+    .conststring                             0x00001448   Section       17  uartstdio.o(.conststring)
     .data                                    0x20000000   Section       16  ece473lab3.o(.data)
     .data                                    0x20000010   Section        5  uartstdio.o(.data)
     g_ui32Base                               0x20000010   Data           4  uartstdio.o(.data)
@@ -625,7 +632,7 @@ Image Symbol Table
     __scatterload_rt2                        0x000002b1   Thumb Code     0  init.o(.text)
     __decompress                             0x000002d5   Thumb Code     0  __dczerorl.o(.text)
     __decompress0                            0x000002d5   Thumb Code    58  __dczerorl.o(.text)
-    ADCInit                                  0x00000311   Thumb Code    86  ece473lab3.o(i.ADCInit)
+    ADCInit_RangeSenor                       0x00000311   Thumb Code    86  ece473lab3.o(i.ADCInit_RangeSenor)
     ADCIntClear                              0x00000371   Thumb Code     8  adc.o(i.ADCIntClear)
     ADCIntStatus                             0x00000379   Thumb Code    54  adc.o(i.ADCIntStatus)
     ADCProcessorTrigger                      0x000003af   Thumb Code    24  adc.o(i.ADCProcessorTrigger)
@@ -640,40 +647,41 @@ Image Symbol Table
     GPIOPadConfigSet                         0x00000585   Thumb Code   216  gpio.o(i.GPIOPadConfigSet)
     GPIOPinConfigure                         0x0000065d   Thumb Code    70  gpio.o(i.GPIOPinConfigure)
     GPIOPinRead                              0x000006ad   Thumb Code    12  gpio.o(i.GPIOPinRead)
-    GPIOPinTypeGPIOInput                     0x000006b9   Thumb Code    30  gpio.o(i.GPIOPinTypeGPIOInput)
-    GPIOPinTypeGPIOOutput                    0x000006d7   Thumb Code    30  gpio.o(i.GPIOPinTypeGPIOOutput)
-    GPIOPinTypeUART                          0x000006f5   Thumb Code    30  gpio.o(i.GPIOPinTypeUART)
-    GPIOPinWrite                             0x00000713   Thumb Code    10  gpio.o(i.GPIOPinWrite)
-    InitConsole                              0x0000071d   Thumb Code    60  ece473lab3.o(i.InitConsole)
-    IntEnable                                0x00000769   Thumb Code   108  interrupt.o(i.IntEnable)
-    IntRegister                              0x000007dd   Thumb Code    52  interrupt.o(i.IntRegister)
-    PrintTime                                0x00000819   Thumb Code    22  ece473lab3.o(i.PrintTime)
-    SysCtlClockGet                           0x00000851   Thumb Code   244  sysctl.o(i.SysCtlClockGet)
-    SysCtlClockSet                           0x00000959   Thumb Code   300  sysctl.o(i.SysCtlClockSet)
-    SysCtlPeripheralEnable                   0x00000a95   Thumb Code    46  sysctl.o(i.SysCtlPeripheralEnable)
-    SysCtlPeripheralPresent                  0x00000ac9   Thumb Code    52  sysctl.o(i.SysCtlPeripheralPresent)
-    SysTickEnable                            0x00000b01   Thumb Code    18  systick.o(i.SysTickEnable)
-    SysTickIntEnable                         0x00000b13   Thumb Code    18  systick.o(i.SysTickIntEnable)
-    SysTickIntRegister                       0x00000b25   Thumb Code    30  systick.o(i.SysTickIntRegister)
-    SysTickPeriodSet                         0x00000b43   Thumb Code    10  systick.o(i.SysTickPeriodSet)
-    SysTick_IRQ_Handler                      0x00000b4d   Thumb Code    88  ece473lab3.o(i.SysTick_IRQ_Handler)
-    UARTCharPut                              0x00000bb1   Thumb Code    16  uart.o(i.UARTCharPut)
-    UARTClockSourceSet                       0x00000bc1   Thumb Code     6  uart.o(i.UARTClockSourceSet)
-    UARTConfigSetExpClk                      0x00000bc7   Thumb Code    76  uart.o(i.UARTConfigSetExpClk)
-    UARTDisable                              0x00000c13   Thumb Code    32  uart.o(i.UARTDisable)
-    UARTEnable                               0x00000c33   Thumb Code    20  uart.o(i.UARTEnable)
-    UARTStdioConfig                          0x00000c49   Thumb Code    68  uartstdio.o(i.UARTStdioConfig)
-    UARTprintf                               0x00000c99   Thumb Code    26  uartstdio.o(i.UARTprintf)
-    UARTvprintf                              0x00000cb5   Thumb Code   574  uartstdio.o(i.UARTvprintf)
-    UARTwrite                                0x00000f05   Thumb Code    46  uartstdio.o(i.UARTwrite)
-    __scatterload_copy                       0x00000f39   Thumb Code    14  handlers.o(i.__scatterload_copy)
-    __scatterload_null                       0x00000f47   Thumb Code     2  handlers.o(i.__scatterload_null)
-    __scatterload_zeroinit                   0x00000f49   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
-    delay                                    0x00000f57   Thumb Code    12  ece473lab3.o(i.delay)
-    main                                     0x00000f65   Thumb Code   226  ece473lab3.o(i.main)
-    switchInterrupt                          0x0000110d   Thumb Code    50  ece473lab3.o(i.switchInterrupt)
-    Region$$Table$$Base                      0x0000142c   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x0000144c   Number         0  anon$$obj.o(Region$$Table)
+    GPIOPinTypeADC                           0x000006b9   Thumb Code    30  gpio.o(i.GPIOPinTypeADC)
+    GPIOPinTypeGPIOInput                     0x000006d7   Thumb Code    30  gpio.o(i.GPIOPinTypeGPIOInput)
+    GPIOPinTypeGPIOOutput                    0x000006f5   Thumb Code    30  gpio.o(i.GPIOPinTypeGPIOOutput)
+    GPIOPinTypeUART                          0x00000713   Thumb Code    30  gpio.o(i.GPIOPinTypeUART)
+    GPIOPinWrite                             0x00000731   Thumb Code    10  gpio.o(i.GPIOPinWrite)
+    InitConsole                              0x0000073d   Thumb Code    60  ece473lab3.o(i.InitConsole)
+    IntEnable                                0x00000789   Thumb Code   108  interrupt.o(i.IntEnable)
+    IntRegister                              0x000007fd   Thumb Code    52  interrupt.o(i.IntRegister)
+    Print_Distance_Time                      0x00000839   Thumb Code    26  ece473lab3.o(i.Print_Distance_Time)
+    SysCtlClockGet                           0x00000889   Thumb Code   244  sysctl.o(i.SysCtlClockGet)
+    SysCtlClockSet                           0x00000991   Thumb Code   300  sysctl.o(i.SysCtlClockSet)
+    SysCtlPeripheralEnable                   0x00000acd   Thumb Code    46  sysctl.o(i.SysCtlPeripheralEnable)
+    SysCtlPeripheralPresent                  0x00000b01   Thumb Code    52  sysctl.o(i.SysCtlPeripheralPresent)
+    SysTickEnable                            0x00000b39   Thumb Code    18  systick.o(i.SysTickEnable)
+    SysTickIntEnable                         0x00000b4b   Thumb Code    18  systick.o(i.SysTickIntEnable)
+    SysTickIntRegister                       0x00000b5d   Thumb Code    30  systick.o(i.SysTickIntRegister)
+    SysTickPeriodSet                         0x00000b7b   Thumb Code    10  systick.o(i.SysTickPeriodSet)
+    SysTick_IRQ_Handler                      0x00000b85   Thumb Code    88  ece473lab3.o(i.SysTick_IRQ_Handler)
+    UARTCharPut                              0x00000be9   Thumb Code    16  uart.o(i.UARTCharPut)
+    UARTClockSourceSet                       0x00000bf9   Thumb Code     6  uart.o(i.UARTClockSourceSet)
+    UARTConfigSetExpClk                      0x00000bff   Thumb Code    76  uart.o(i.UARTConfigSetExpClk)
+    UARTDisable                              0x00000c4b   Thumb Code    32  uart.o(i.UARTDisable)
+    UARTEnable                               0x00000c6b   Thumb Code    20  uart.o(i.UARTEnable)
+    UARTStdioConfig                          0x00000c81   Thumb Code    68  uartstdio.o(i.UARTStdioConfig)
+    UARTprintf                               0x00000cd1   Thumb Code    26  uartstdio.o(i.UARTprintf)
+    UARTvprintf                              0x00000ced   Thumb Code   574  uartstdio.o(i.UARTvprintf)
+    UARTwrite                                0x00000f3d   Thumb Code    46  uartstdio.o(i.UARTwrite)
+    __scatterload_copy                       0x00000f71   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x00000f7f   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x00000f81   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    delay                                    0x00000f8f   Thumb Code    12  ece473lab3.o(i.delay)
+    main                                     0x00000f9d   Thumb Code   224  ece473lab3.o(i.main)
+    switchInterrupt                          0x0000113d   Thumb Code    50  ece473lab3.o(i.switchInterrupt)
+    Region$$Table$$Base                      0x0000145c   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x0000147c   Number         0  anon$$obj.o(Region$$Table)
     clkscalevalue                            0x20000000   Data           4  ece473lab3.o(.data)
     time_msec                                0x20000004   Data           4  ece473lab3.o(.data)
     time_sec                                 0x20000008   Data           4  ece473lab3.o(.data)
@@ -688,102 +696,104 @@ Memory Map of the image
 
   Image Entry point : 0x0000026d
 
-  Load Region LR_1 (Base: 0x00000000, Size: 0x00001ab8, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x0000145c])
+  Load Region LR_1 (Base: 0x00000000, Size: 0x00001ae8, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x0000148c])
 
-    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x0000144c, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x0000147c, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x00000000   0x00000000   0x00000294   Code   RO            3  * RESET               startup.o
-    0x00000294   0x00000294   0x00000000   Code   RO         1418  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x00000294   0x00000294   0x00000004   Code   RO         1421    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x00000298   0x00000298   0x00000004   Code   RO         1424    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x0000029c   0x0000029c   0x00000000   Code   RO         1426    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x0000029c   0x0000029c   0x00000000   Code   RO         1428    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x0000029c   0x0000029c   0x00000008   Code   RO         1429    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x000002a4   0x000002a4   0x00000000   Code   RO         1431    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x000002a4   0x000002a4   0x00000000   Code   RO         1433    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x000002a4   0x000002a4   0x00000004   Code   RO         1422    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
-    0x000002a8   0x000002a8   0x00000006   Code   RO          402    .emb_text           sysctl.o
+    0x00000294   0x00000294   0x00000000   Code   RO         1424  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x00000294   0x00000294   0x00000004   Code   RO         1427    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x00000298   0x00000298   0x00000004   Code   RO         1430    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x0000029c   0x0000029c   0x00000000   Code   RO         1432    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x0000029c   0x0000029c   0x00000000   Code   RO         1434    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x0000029c   0x0000029c   0x00000008   Code   RO         1435    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x000002a4   0x000002a4   0x00000000   Code   RO         1437    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x000002a4   0x000002a4   0x00000000   Code   RO         1439    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x000002a4   0x000002a4   0x00000004   Code   RO         1428    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x000002a8   0x000002a8   0x00000006   Code   RO          408    .emb_text           sysctl.o
     0x000002ae   0x000002ae   0x00000002   PAD
-    0x000002b0   0x000002b0   0x00000024   Code   RO         1435    .text               mc_w.l(init.o)
-    0x000002d4   0x000002d4   0x0000003a   Code   RO         1445    .text               mc_w.l(__dczerorl.o)
+    0x000002b0   0x000002b0   0x00000024   Code   RO         1441    .text               mc_w.l(init.o)
+    0x000002d4   0x000002d4   0x0000003a   Code   RO         1451    .text               mc_w.l(__dczerorl.o)
     0x0000030e   0x0000030e   0x00000002   PAD
-    0x00000310   0x00000310   0x00000060   Code   RO           12    i.ADCInit           ece473lab3.o
-    0x00000370   0x00000370   0x00000008   Code   RO          959    i.ADCIntClear       adc.o
-    0x00000378   0x00000378   0x00000036   Code   RO          964    i.ADCIntStatus      adc.o
-    0x000003ae   0x000003ae   0x00000018   Code   RO          968    i.ADCProcessorTrigger  adc.o
-    0x000003c6   0x000003c6   0x0000002c   Code   RO          971    i.ADCSequenceConfigure  adc.o
-    0x000003f2   0x000003f2   0x00000022   Code   RO          972    i.ADCSequenceDataGet  adc.o
-    0x00000414   0x00000414   0x0000000c   Code   RO          974    i.ADCSequenceEnable  adc.o
-    0x00000420   0x00000420   0x00000076   Code   RO          977    i.ADCSequenceStepConfigure  adc.o
-    0x00000496   0x00000496   0x00000032   Code   RO          118    i.GPIODirModeSet    gpio.o
-    0x000004c8   0x000004c8   0x0000000c   Code   RO          121    i.GPIOIntEnable     gpio.o
-    0x000004d4   0x000004d4   0x0000002c   Code   RO          122    i.GPIOIntNumberGet  gpio.o
-    0x00000500   0x00000500   0x0000001e   Code   RO          123    i.GPIOIntRegister   gpio.o
-    0x0000051e   0x0000051e   0x00000066   Code   RO          126    i.GPIOIntTypeSet    gpio.o
-    0x00000584   0x00000584   0x000000d8   Code   RO          129    i.GPIOPadConfigSet  gpio.o
-    0x0000065c   0x0000065c   0x00000050   Code   RO          130    i.GPIOPinConfigure  gpio.o
-    0x000006ac   0x000006ac   0x0000000c   Code   RO          131    i.GPIOPinRead       gpio.o
-    0x000006b8   0x000006b8   0x0000001e   Code   RO          139    i.GPIOPinTypeGPIOInput  gpio.o
-    0x000006d6   0x000006d6   0x0000001e   Code   RO          140    i.GPIOPinTypeGPIOOutput  gpio.o
-    0x000006f4   0x000006f4   0x0000001e   Code   RO          152    i.GPIOPinTypeUART   gpio.o
-    0x00000712   0x00000712   0x0000000a   Code   RO          155    i.GPIOPinWrite      gpio.o
-    0x0000071c   0x0000071c   0x0000004c   Code   RO           13    i.InitConsole       ece473lab3.o
-    0x00000768   0x00000768   0x00000074   Code   RO         1158    i.IntEnable         interrupt.o
-    0x000007dc   0x000007dc   0x0000003c   Code   RO         1170    i.IntRegister       interrupt.o
-    0x00000818   0x00000818   0x00000038   Code   RO           15    i.PrintTime         ece473lab3.o
-    0x00000850   0x00000850   0x00000108   Code   RO          405    i.SysCtlClockGet    sysctl.o
-    0x00000958   0x00000958   0x0000013c   Code   RO          406    i.SysCtlClockSet    sysctl.o
-    0x00000a94   0x00000a94   0x00000034   Code   RO          426    i.SysCtlPeripheralEnable  sysctl.o
-    0x00000ac8   0x00000ac8   0x00000038   Code   RO          429    i.SysCtlPeripheralPresent  sysctl.o
-    0x00000b00   0x00000b00   0x00000012   Code   RO         1356    i.SysTickEnable     systick.o
-    0x00000b12   0x00000b12   0x00000012   Code   RO         1358    i.SysTickIntEnable  systick.o
-    0x00000b24   0x00000b24   0x0000001e   Code   RO         1359    i.SysTickIntRegister  systick.o
-    0x00000b42   0x00000b42   0x0000000a   Code   RO         1362    i.SysTickPeriodSet  systick.o
-    0x00000b4c   0x00000b4c   0x00000064   Code   RO           16    i.SysTick_IRQ_Handler  ece473lab3.o
-    0x00000bb0   0x00000bb0   0x00000010   Code   RO          664    i.UARTCharPut       uart.o
-    0x00000bc0   0x00000bc0   0x00000006   Code   RO          668    i.UARTClockSourceSet  uart.o
-    0x00000bc6   0x00000bc6   0x0000004c   Code   RO          670    i.UARTConfigSetExpClk  uart.o
-    0x00000c12   0x00000c12   0x00000020   Code   RO          673    i.UARTDisable       uart.o
-    0x00000c32   0x00000c32   0x00000014   Code   RO          675    i.UARTEnable        uart.o
-    0x00000c46   0x00000c46   0x00000002   PAD
-    0x00000c48   0x00000c48   0x00000050   Code   RO         1276    i.UARTStdioConfig   uartstdio.o
-    0x00000c98   0x00000c98   0x0000001a   Code   RO         1279    i.UARTprintf        uartstdio.o
-    0x00000cb2   0x00000cb2   0x00000002   PAD
-    0x00000cb4   0x00000cb4   0x00000250   Code   RO         1280    i.UARTvprintf       uartstdio.o
-    0x00000f04   0x00000f04   0x00000034   Code   RO         1281    i.UARTwrite         uartstdio.o
-    0x00000f38   0x00000f38   0x0000000e   Code   RO         1439    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x00000f46   0x00000f46   0x00000002   Code   RO         1440    i.__scatterload_null  mc_w.l(handlers.o)
-    0x00000f48   0x00000f48   0x0000000e   Code   RO         1441    i.__scatterload_zeroinit  mc_w.l(handlers.o)
-    0x00000f56   0x00000f56   0x0000000c   Code   RO           17    i.delay             ece473lab3.o
-    0x00000f62   0x00000f62   0x00000002   PAD
-    0x00000f64   0x00000f64   0x000001a8   Code   RO           18    i.main              ece473lab3.o
-    0x0000110c   0x0000110c   0x00000040   Code   RO           19    i.switchInterrupt   ece473lab3.o
-    0x0000114c   0x0000114c   0x00000138   Data   RO          156    .constdata          gpio.o
-    0x00001284   0x00001284   0x0000006c   Data   RO          441    .constdata          sysctl.o
-    0x000012f0   0x000012f0   0x0000010c   Data   RO         1173    .constdata          interrupt.o
-    0x000013fc   0x000013fc   0x0000001c   Data   RO         1282    .constdata          uartstdio.o
-    0x00001418   0x00001418   0x00000011   Data   RO         1283    .conststring        uartstdio.o
-    0x00001429   0x00001429   0x00000003   PAD
-    0x0000142c   0x0000142c   0x00000020   Data   RO         1437    Region$$Table       anon$$obj.o
+    0x00000310   0x00000310   0x00000060   Code   RO           13    i.ADCInit_RangeSenor  ece473lab3.o
+    0x00000370   0x00000370   0x00000008   Code   RO          965    i.ADCIntClear       adc.o
+    0x00000378   0x00000378   0x00000036   Code   RO          970    i.ADCIntStatus      adc.o
+    0x000003ae   0x000003ae   0x00000018   Code   RO          974    i.ADCProcessorTrigger  adc.o
+    0x000003c6   0x000003c6   0x0000002c   Code   RO          977    i.ADCSequenceConfigure  adc.o
+    0x000003f2   0x000003f2   0x00000022   Code   RO          978    i.ADCSequenceDataGet  adc.o
+    0x00000414   0x00000414   0x0000000c   Code   RO          980    i.ADCSequenceEnable  adc.o
+    0x00000420   0x00000420   0x00000076   Code   RO          983    i.ADCSequenceStepConfigure  adc.o
+    0x00000496   0x00000496   0x00000032   Code   RO          124    i.GPIODirModeSet    gpio.o
+    0x000004c8   0x000004c8   0x0000000c   Code   RO          127    i.GPIOIntEnable     gpio.o
+    0x000004d4   0x000004d4   0x0000002c   Code   RO          128    i.GPIOIntNumberGet  gpio.o
+    0x00000500   0x00000500   0x0000001e   Code   RO          129    i.GPIOIntRegister   gpio.o
+    0x0000051e   0x0000051e   0x00000066   Code   RO          132    i.GPIOIntTypeSet    gpio.o
+    0x00000584   0x00000584   0x000000d8   Code   RO          135    i.GPIOPadConfigSet  gpio.o
+    0x0000065c   0x0000065c   0x00000050   Code   RO          136    i.GPIOPinConfigure  gpio.o
+    0x000006ac   0x000006ac   0x0000000c   Code   RO          137    i.GPIOPinRead       gpio.o
+    0x000006b8   0x000006b8   0x0000001e   Code   RO          138    i.GPIOPinTypeADC    gpio.o
+    0x000006d6   0x000006d6   0x0000001e   Code   RO          145    i.GPIOPinTypeGPIOInput  gpio.o
+    0x000006f4   0x000006f4   0x0000001e   Code   RO          146    i.GPIOPinTypeGPIOOutput  gpio.o
+    0x00000712   0x00000712   0x0000001e   Code   RO          158    i.GPIOPinTypeUART   gpio.o
+    0x00000730   0x00000730   0x0000000a   Code   RO          161    i.GPIOPinWrite      gpio.o
+    0x0000073a   0x0000073a   0x00000002   PAD
+    0x0000073c   0x0000073c   0x0000004c   Code   RO           14    i.InitConsole       ece473lab3.o
+    0x00000788   0x00000788   0x00000074   Code   RO         1164    i.IntEnable         interrupt.o
+    0x000007fc   0x000007fc   0x0000003c   Code   RO         1176    i.IntRegister       interrupt.o
+    0x00000838   0x00000838   0x00000050   Code   RO           16    i.Print_Distance_Time  ece473lab3.o
+    0x00000888   0x00000888   0x00000108   Code   RO          411    i.SysCtlClockGet    sysctl.o
+    0x00000990   0x00000990   0x0000013c   Code   RO          412    i.SysCtlClockSet    sysctl.o
+    0x00000acc   0x00000acc   0x00000034   Code   RO          432    i.SysCtlPeripheralEnable  sysctl.o
+    0x00000b00   0x00000b00   0x00000038   Code   RO          435    i.SysCtlPeripheralPresent  sysctl.o
+    0x00000b38   0x00000b38   0x00000012   Code   RO         1362    i.SysTickEnable     systick.o
+    0x00000b4a   0x00000b4a   0x00000012   Code   RO         1364    i.SysTickIntEnable  systick.o
+    0x00000b5c   0x00000b5c   0x0000001e   Code   RO         1365    i.SysTickIntRegister  systick.o
+    0x00000b7a   0x00000b7a   0x0000000a   Code   RO         1368    i.SysTickPeriodSet  systick.o
+    0x00000b84   0x00000b84   0x00000064   Code   RO           17    i.SysTick_IRQ_Handler  ece473lab3.o
+    0x00000be8   0x00000be8   0x00000010   Code   RO          670    i.UARTCharPut       uart.o
+    0x00000bf8   0x00000bf8   0x00000006   Code   RO          674    i.UARTClockSourceSet  uart.o
+    0x00000bfe   0x00000bfe   0x0000004c   Code   RO          676    i.UARTConfigSetExpClk  uart.o
+    0x00000c4a   0x00000c4a   0x00000020   Code   RO          679    i.UARTDisable       uart.o
+    0x00000c6a   0x00000c6a   0x00000014   Code   RO          681    i.UARTEnable        uart.o
+    0x00000c7e   0x00000c7e   0x00000002   PAD
+    0x00000c80   0x00000c80   0x00000050   Code   RO         1282    i.UARTStdioConfig   uartstdio.o
+    0x00000cd0   0x00000cd0   0x0000001a   Code   RO         1285    i.UARTprintf        uartstdio.o
+    0x00000cea   0x00000cea   0x00000002   PAD
+    0x00000cec   0x00000cec   0x00000250   Code   RO         1286    i.UARTvprintf       uartstdio.o
+    0x00000f3c   0x00000f3c   0x00000034   Code   RO         1287    i.UARTwrite         uartstdio.o
+    0x00000f70   0x00000f70   0x0000000e   Code   RO         1445    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x00000f7e   0x00000f7e   0x00000002   Code   RO         1446    i.__scatterload_null  mc_w.l(handlers.o)
+    0x00000f80   0x00000f80   0x0000000e   Code   RO         1447    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x00000f8e   0x00000f8e   0x0000000c   Code   RO           18    i.delay             ece473lab3.o
+    0x00000f9a   0x00000f9a   0x00000002   PAD
+    0x00000f9c   0x00000f9c   0x000001a0   Code   RO           19    i.main              ece473lab3.o
+    0x0000113c   0x0000113c   0x00000040   Code   RO           20    i.switchInterrupt   ece473lab3.o
+    0x0000117c   0x0000117c   0x00000138   Data   RO          162    .constdata          gpio.o
+    0x000012b4   0x000012b4   0x0000006c   Data   RO          447    .constdata          sysctl.o
+    0x00001320   0x00001320   0x0000010c   Data   RO         1179    .constdata          interrupt.o
+    0x0000142c   0x0000142c   0x0000001c   Data   RO         1288    .constdata          uartstdio.o
+    0x00001448   0x00001448   0x00000011   Data   RO         1289    .conststring        uartstdio.o
+    0x00001459   0x00001459   0x00000003   PAD
+    0x0000145c   0x0000145c   0x00000020   Data   RO         1443    Region$$Table       anon$$obj.o
 
 
-    Execution Region ER_RW (Exec base: 0x20000000, Load base: 0x0000144c, Size: 0x0000066c, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x00000010])
+    Execution Region ER_RW (Exec base: 0x20000000, Load base: 0x0000147c, Size: 0x0000066c, Max: 0xffffffff, ABSOLUTE, COMPRESSED[0x00000010])
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   COMPRESSED   0x00000010   Data   RW           20    .data               ece473lab3.o
-    0x20000010   COMPRESSED   0x00000005   Data   RW         1284    .data               uartstdio.o
+    0x20000000   COMPRESSED   0x00000010   Data   RW           21    .data               ece473lab3.o
+    0x20000010   COMPRESSED   0x00000005   Data   RW         1290    .data               uartstdio.o
     0x20000015   COMPRESSED   0x000003eb   PAD
-    0x20000400   COMPRESSED   0x0000026c   Data   RW         1174    vtable              interrupt.o
+    0x20000400   COMPRESSED   0x0000026c   Data   RW         1180    vtable              interrupt.o
 
 
-    Execution Region ER_ZI (Exec base: 0x2000066c, Load base: 0x0000145c, Size: 0x00000404, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_ZI (Exec base: 0x2000066c, Load base: 0x0000148c, Size: 0x00000404, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x2000066c   0x0000145c   0x00000004   PAD
+    0x2000066c   0x0000148c   0x00000004   PAD
     0x20000670        -       0x00000400   Zero   RW            1    STACK               startup.o
 
 
@@ -795,8 +805,8 @@ Image component sizes
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
        294          0          0          0          0       5474   adc.o
-       828        284          0         16          0       9191   ece473lab3.o
-       646         16        312          0          0       8424   gpio.o
+       844        298          0         16          0       9912   ece473lab3.o
+       676         16        312          0          0       9025   gpio.o
        176         16        268        620          0       2238   interrupt.o
        660        620          0          0       1024        800   startup.o
        694         46        108          0          0       4568   sysctl.o
@@ -805,9 +815,9 @@ Image component sizes
        750         36         45          5          0       4860   uartstdio.o
 
     ----------------------------------------------------------------------
-      4282       1018        768       1644       1028      40498   Object Totals
+      4330       1032        768       1644       1028      41820   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-         8          0          3       1003          4          0   (incl. Padding)
+        10          0          3       1003          4          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -845,15 +855,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      4428       1034        768       1644       1028      36650   Grand Totals
-      4428       1034        768         16       1028      36650   ELF Image Totals (compressed)
-      4428       1034        768         16          0          0   ROM Totals
+      4476       1048        768       1644       1028      37872   Grand Totals
+      4476       1048        768         16       1028      37872   ELF Image Totals (compressed)
+      4476       1048        768         16          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 5196 (   5.07kB)
+    Total RO  Size (Code + RO Data)                 5244 (   5.12kB)
     Total RW  Size (RW Data + ZI Data)              2672 (   2.61kB)
-    Total ROM Size (Code + RO Data + RW Data)       5212 (   5.09kB)
+    Total ROM Size (Code + RO Data + RW Data)       5260 (   5.14kB)
 
 ==============================================================================
 
