@@ -89,8 +89,8 @@
       <flags>2</flags>
       <showCmd>3</showCmd>
       <MinPosition>
-        <xPos>-32000</xPos>
-        <yPos>-32000</yPos>
+        <xPos>-1</xPos>
+        <yPos>-1</yPos>
       </MinPosition>
       <MaxPosition>
         <xPos>-1</xPos>
@@ -3602,18 +3602,18 @@
       <ActiveTab>0</ActiveTab>
       <Doc>
         <Name>.\ECE473lab3.c</Name>
-        <ColumnNumber>66</ColumnNumber>
-        <TopLine>1</TopLine>
-        <CurrentLine>201</CurrentLine>
+        <ColumnNumber>55</ColumnNumber>
+        <TopLine>185</TopLine>
+        <CurrentLine>211</CurrentLine>
         <Folding>1</Folding>
-        <ContractedFolders>165</ContractedFolders>
+        <ContractedFolders>171</ContractedFolders>
         <PaneID>0</PaneID>
       </Doc>
       <Doc>
         <Name>driverlib/gpio.h</Name>
         <ColumnNumber>0</ColumnNumber>
-        <TopLine>82</TopLine>
-        <CurrentLine>64</CurrentLine>
+        <TopLine>53</TopLine>
+        <CurrentLine>62</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>

@@ -25,13 +25,14 @@
 #define SW1 GPIO_PIN_4
 
 
+
 //Prototypes
 void InitConsole(void); 
 void ADCInit (void);    
 void SysTick_IRQ_Handler(void);
 void switchInterrupt(void);
 void PrintTemps (uint32_t TempC);
-void Print_Distance_Time (uint32_t Calc_Distance);
+void Print_Distance_Time (float Calc_Distance);
 void ADCInit_RangeSenor(void);
 
 // Global variables
@@ -58,7 +59,9 @@ int main(void)
 // These variables are used to store the distance conversions for
 // Raw and Digital values.
 		uint32_t RAW_Distance;								// Average RAW distance value
-		uint32_t CalcDigital_Distance;				// Calculated Digital distance
+		float RAW_Distance_Voltage;						// RAW distance to Voltage
+		float Actual_Calc_Distance;						// Calculated Digital distance
+		uint32_t ADC_Constant = 4095;  			
 
 	
 // System clock initialization	
@@ -124,12 +127,15 @@ while(1)
 				//ui32TempValueC = (1475 - ((2475 * ui32TempAvg)) / 4096)/10; 
 				
 				// Convert RAW distance to Voltage value
+				RAW_Distance_Voltage = ((float)3.3)*((float)RAW_Distance/(float)ADC_Constant);
 				
-				
+				// Actual Distance
+				Actual_Calc_Distance = ((float)(0.0625)*RAW_Distance_Voltage)-((float)(0.000026));
+				Actual_Calc_Distance = 1/Actual_Calc_Distance;
 	
         // Display
         // PrintTemps (ui32TempAvg);
-				Print_Distance_Time(RAW_Distance);
+				Print_Distance_Time(Actual_Calc_Distance);
 
         //
         // This function provides a means of generating a constant length
@@ -199,9 +205,11 @@ void SysTick_IRQ_Handler(void)
 
 
 // This functions prints the Time and distance in the UART console
-void Print_Distance_Time (uint32_t Calc_Distance)
+void Print_Distance_Time (float Calc_Distance)
 {
-	UARTprintf("Time = %d:%d:%d \t Distance(Raw): %d\n", time_min, time_sec, time_msec,Calc_Distance);	
+	char buffer[50];
+	sprintf(buffer,"Time = %d:%d:%d \t Distance(cm): %3.3f\n", time_min, time_sec, time_msec,Calc_Distance);
+	UARTprintf(buffer);	
 }
 
 
