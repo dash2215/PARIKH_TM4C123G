@@ -34,6 +34,7 @@ void switchInterrupt(void);
 void PrintTemps (uint32_t TempC);
 void Print_Distance_Time (float Calc_Distance);
 void ADCInit_RangeSenor(void);
+float func_Actual_Calc_Distance(float input_voltage);
 
 // Global variables
 //Determines the sample rate of the ADC 
@@ -130,8 +131,11 @@ while(1)
 				RAW_Distance_Voltage = ((float)3.3)*((float)RAW_Distance/(float)ADC_Constant);
 				
 				// Actual Distance
+				#if (0)
 				Actual_Calc_Distance = ((float)(0.0625)*RAW_Distance_Voltage)-((float)(0.000026));
 				Actual_Calc_Distance = 1/Actual_Calc_Distance;
+				#endif
+				Actual_Calc_Distance = func_Actual_Calc_Distance(RAW_Distance_Voltage);
 	
         // Display
         // PrintTemps (ui32TempAvg);
@@ -326,4 +330,14 @@ void ADCInit_RangeSenor(void)
     // interrupt flag is cleared before we sample.
     ADCIntClear(ADC0_BASE, 1);	
 
+}
+
+
+// Voltage to actual distance 
+float func_Actual_Calc_Distance (float input_voltage)
+{
+	float temp;
+	temp = ((float)(0.0625)*input_voltage)-((float)(0.000026));
+	temp = 1/temp;
+	return temp;
 }

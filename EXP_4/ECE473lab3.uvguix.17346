@@ -89,8 +89,8 @@
       <flags>2</flags>
       <showCmd>3</showCmd>
       <MinPosition>
-        <xPos>-1</xPos>
-        <yPos>-1</yPos>
+        <xPos>-32000</xPos>
+        <yPos>-32000</yPos>
       </MinPosition>
       <MaxPosition>
         <xPos>-1</xPos>
@@ -3602,11 +3602,11 @@
       <ActiveTab>0</ActiveTab>
       <Doc>
         <Name>.\ECE473lab3.c</Name>
-        <ColumnNumber>55</ColumnNumber>
-        <TopLine>185</TopLine>
-        <CurrentLine>211</CurrentLine>
+        <ColumnNumber>79</ColumnNumber>
+        <TopLine>118</TopLine>
+        <CurrentLine>138</CurrentLine>
         <Folding>1</Folding>
-        <ContractedFolders>171</ContractedFolders>
+        <ContractedFolders>133,175</ContractedFolders>
         <PaneID>0</PaneID>
       </Doc>
       <Doc>
